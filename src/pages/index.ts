@@ -1,4 +1,3 @@
-
 export { default as GenerateCodePage } from './GenerateCodePage'
 export * from './GenerateCodePage'
 

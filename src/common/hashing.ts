@@ -1,4 +1,8 @@
-import { atStringHash as atStringHashWasm, atStringHash64 as atStringHash64Wasm, atLiteralStringHash as atLiteralStringHashWasm } from 'wasm-lib'
+import {
+  atLiteralStringHash as atLiteralStringHashWasm,
+  atStringHash as atStringHashWasm,
+  atStringHash64 as atStringHash64Wasm
+} from 'wasm-lib'
 
 export function atStringHash(str: string): number | undefined {
   return atStringHashWasm(str)

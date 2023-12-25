@@ -1,10 +1,7 @@
 import { Box, Popover, useTheme } from '@mui/material'
 import InteractiveText from '../InteractiveText'
 import { Fragment } from 'react'
-import {
-  bindTrigger,
-  bindPopover
-} from 'material-ui-popup-state/hooks'
+import { bindPopover, bindTrigger } from 'material-ui-popup-state/hooks'
 import PopupState from 'material-ui-popup-state'
 import TypeDefinition from '../TypeDefinition'
 
@@ -13,7 +10,10 @@ interface NativeTypeProps {
   type: string
 }
 
-export default function NativeType({ popover = false, type }: NativeTypeProps) {
+export default function NativeType({
+  popover = false,
+  type
+}: NativeTypeProps) {
   const theme = useTheme()
 
   if (popover) {
@@ -31,9 +31,9 @@ export default function NativeType({ popover = false, type }: NativeTypeProps) {
               {...bindPopover(popupState)}
               PaperProps={{
                 sx: {
-                  border:     `solid 1px ${theme.extensions.typeInfoBorderColor}`, 
+                  border:     `solid 1px ${theme.extensions.typeInfoBorderColor}`,
                   whiteSpace: 'nowrap',
-                  overflowX:  'auto' 
+                  overflowX:  'auto'
                 }
               }}
               anchorOrigin={{

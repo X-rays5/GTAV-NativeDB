@@ -17,10 +17,9 @@ export default async function LoadAlloc8orNatives(game: Game): Promise<Alloc8orN
     if (!response.ok) {
       return null
     }
-    
+
     return await response.json()
-  }
-  catch (e) {
+  } catch (e) {
     return null
   }
 }

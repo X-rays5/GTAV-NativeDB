@@ -1,5 +1,5 @@
 import { useThemesContext } from '../context'
 
-export default function useThemes()  {
+export default function useThemes() {
   return useThemesContext().themes
 }

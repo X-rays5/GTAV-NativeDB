@@ -1,4 +1,3 @@
-
 export interface DottieDotCodeExample {
   lang: string
   code: string

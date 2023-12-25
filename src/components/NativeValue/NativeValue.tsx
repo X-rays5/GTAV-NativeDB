@@ -1,5 +1,5 @@
 import { Box, useTheme } from '@mui/material'
-import { useMemo, Fragment, memo } from 'react'
+import { Fragment, memo, useMemo } from 'react'
 import NativeConst from './NativeConst'
 
 export interface NativeValueProps {
@@ -7,7 +7,10 @@ export interface NativeValueProps {
   popover?: boolean
 }
 
-export default memo(function NativeValue({ value, popover =  false }: NativeValueProps) {
+export default memo(function NativeValue({
+  value,
+  popover = false
+}: NativeValueProps) {
   const theme = useTheme()
 
   const split = useMemo(() => {
@@ -16,8 +19,8 @@ export default memo(function NativeValue({ value, popover =  false }: NativeValu
     }
 
     const regex = /(.*?)(?=HASH\(".*?(?=")"\))(HASH\(".*?(?=")"\))|(.*?)(?=([a-zA-Z][_0-9a-zA-Z]+))([_0-9a-zA-Z]+)|(.+)/gm
-    const matches = [ ...value.matchAll(regex) ].map((arr) => { 
-      arr[1] = arr[1] ?? arr[3] 
+    const matches = [ ...value.matchAll(regex) ].map((arr) => {
+      arr[1] = arr[1] ?? arr[3]
       arr[2] = arr[2] ?? arr[4]
       return arr
     })

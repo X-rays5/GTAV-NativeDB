@@ -3,7 +3,7 @@ import { Native } from '../context'
 export interface CodeGenType {
   pointers: number
   baseType: string
-  isConst : boolean
+  isConst: boolean
 }
 
 export interface CodeGenParam {
@@ -12,20 +12,20 @@ export interface CodeGenParam {
 }
 
 export interface CodeGenNative {
-  hash       : string
-  jhash     ?: string
-  params     : CodeGenParam[]
-  returnType : CodeGenType
-  name       : string
-  comment    : string
-  build     ?: string
-  oldNames  ?: string[]
+  hash: string
+  jhash?: string
+  params: CodeGenParam[]
+  returnType: CodeGenType
+  name: string
+  comment: string
+  build?: string
+  oldNames?: string[]
 }
 
 export interface CodeGenFunction {
   returnType: string
-  name      : string
-  params    : CodeGenParam
+  name: string
+  params: CodeGenParam
 }
 
 export interface CodeGeneratorFile {
@@ -35,8 +35,7 @@ export interface CodeGeneratorFile {
   mimeType: string
 }
 
-export default 
-interface ICodeGenerator {
+export default interface ICodeGenerator {
   start(): this
 
   end(): this
@@ -52,6 +51,8 @@ interface ICodeGenerator {
   get(): string
 
   submitExtraFile(file: CodeGeneratorFile): void
+
   getExtraFiles(): CodeGeneratorFile[]
+
   clearExtraFiles(): void
 }

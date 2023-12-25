@@ -20,6 +20,7 @@ interface Color {
   label: string
   prop: keyof ThemeColors
 }
+
 const colors: Color[] = [
   {
     label: 'Primary Color',
@@ -64,7 +65,10 @@ const colors: Color[] = [
 ]
 
 function ThemeEditor({ themeId }: ThemeEditorProps) {
-  const { patchTheme, removeTheme } = useThemesContext()
+  const {
+    patchTheme,
+    removeTheme
+  } = useThemesContext()
   const theme = useCustomTheme(themeId)
   const [ name, setName ] = useState(theme?.name ?? '')
 
@@ -143,7 +147,10 @@ function ThemeEditor({ themeId }: ThemeEditorProps) {
       </SettingsControl>
 
       <ColorGrid>
-        {colors.map(({ label, prop }) => (
+        {colors.map(({
+          label,
+          prop
+        }) => (
           <ThemeColor
             key={prop}
             label={label}

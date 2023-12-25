@@ -1,4 +1,4 @@
-import { ReactNode, createContext, memo, useCallback, useState } from 'react'
+import { createContext, memo, ReactNode, useCallback, useState } from 'react'
 import { ConstDefinition, Game, Namespace, Native, NativeStats, TypeDefinition } from './model'
 import { NativeDataLoader } from '../../external'
 import { useGuardedContext } from '../../hooks'
@@ -48,7 +48,12 @@ export const NativeDataProvider = memo(function NativeDataProvider({ children }:
     [Game.RedDeadRedemption2]: initialState
   })
 
-  const setNatives = useCallback<NativeDataContext['setNatives']>((game, { namespaces, natives, types, constants }) => {
+  const setNatives = useCallback<NativeDataContext['setNatives']>((game, {
+    namespaces,
+    natives,
+    types,
+    constants
+  }) => {
     const stats: NativeStats = {
       namespaces: Object.keys(namespaces).length,
       natives:    Object.keys(natives).length,
@@ -62,7 +67,7 @@ export const NativeDataProvider = memo(function NativeDataProvider({ children }:
         return accumulator
       }, {
         total:     0,
-        confirmed: 0 
+        confirmed: 0
       })
     }
 

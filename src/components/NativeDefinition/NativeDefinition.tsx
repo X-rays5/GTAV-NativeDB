@@ -10,15 +10,27 @@ import { toPascalCase } from '../../common'
 import { convertTypeToTS } from '../../code-generation'
 
 export interface NativeDefinitionProps extends Omit<TypographyProps, 'children'> {
-  name         : string
-  params       : NativeParam[]
-  returnType   : string
-  noWrap      ?: boolean
+  name: string
+  params: NativeParam[]
+  returnType: string
+  noWrap?: boolean
   nameCopyable?: boolean
 }
 
-function NativeDefinition({ name, params, returnType, sx, noWrap = false, nameCopyable = true, ...rest }: NativeDefinitionProps) {
-  const { nativeDisplayMode, nativeTypes, displayVoidReturnType } = useSettings()
+function NativeDefinition({
+  name,
+  params,
+  returnType,
+  sx,
+  noWrap = false,
+  nameCopyable = true,
+  ...rest
+}: NativeDefinitionProps) {
+  const {
+    nativeDisplayMode,
+    nativeTypes,
+    displayVoidReturnType
+  } = useSettings()
   const nameWithBreaks = useMemo(() => {
     if (nativeDisplayMode === 'TS') {
       return toPascalCase(name, '\u200b')
@@ -26,16 +38,16 @@ function NativeDefinition({ name, params, returnType, sx, noWrap = false, nameCo
     return name.replace(/_/g, '_\u200b')
   }, [ name, nativeDisplayMode ])
   const { extensions } = useTheme()
-  
+
   return (
-    <Typography 
-      component="span" 
-      sx={{ 
+    <Typography
+      component="span"
+      sx={{
         fontFamily:   '"Roboto Mono", monospace',
         whiteSpace:   noWrap ? 'nowrap' : 'normal',
         overflowWrap: noWrap ? 'normal' : 'break-word',
         ...sx
-      }} 
+      }}
       {...rest}
     >
       {(nativeDisplayMode === 'C') && (
@@ -64,11 +76,15 @@ function NativeDefinition({ name, params, returnType, sx, noWrap = false, nameCo
       {((nativeDisplayMode === 'UML' || nativeDisplayMode === 'TS') && (displayVoidReturnType || (returnType !== 'void' && returnType !== 'VOID'))) && (
         <Box component="span" sx={{ color: extensions.symbolColor }}>
           :
-&nbsp;
-          <NativeType popover={!noWrap} type={nativeDisplayMode === 'TS' ? convertTypeToTS(returnType, nativeTypes) : returnType} />
+          &nbsp;
+          <NativeType
+            popover={!noWrap}
+            type={nativeDisplayMode === 'TS' ? convertTypeToTS(returnType, nativeTypes) : returnType}
+          />
         </Box>
       )}
     </Typography>
   )
 }
+
 export default memo(NativeDefinition)

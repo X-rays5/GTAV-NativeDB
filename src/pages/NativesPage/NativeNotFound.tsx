@@ -12,7 +12,7 @@ export default function NativeNotFound({ nativeHash }: Props) {
       </Typography>
 
       <Typography variant="subtitle1">
-        A native with the hash 
+        A native with the hash
         {' '}
         {nativeHash}
         {' '}

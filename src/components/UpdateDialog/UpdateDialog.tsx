@@ -1,7 +1,15 @@
-import { Dialog, DialogTitle, DialogContent, Typography, styled, Divider, Box, DialogActions, Button } from '@mui/material'
-import { memo } from 'react'
-import { useCallback } from 'react'
-import { ReactNode } from 'react'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  styled,
+  Typography
+} from '@mui/material'
+import { memo, ReactNode, useCallback } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import { buildDate } from '../../common'
 
@@ -17,29 +25,32 @@ interface HeaderProps {
   type: 'new' | 'fix'
 }
 
-function Header({ children,  type }: HeaderProps) {
+function Header({
+  children,
+  type
+}: HeaderProps) {
   const color = type === 'fix' ? 'warning.main' : 'primary.main'
   return (
     <Box
       sx={{
         display:    'flex',
         alignItems: 'center',
-        gap:        1 
+        gap:        1
       }}
     >
-      <Typography 
-        component="h3" 
+      <Typography
+        component="h3"
         sx={{ color: color }}
         variant="h6"
       >
         {children}
       </Typography>
 
-      <Divider 
-        sx={{ 
-          flex:    1, 
-          bgcolor: color, 
-          mt:      .5 
+      <Divider
+        sx={{
+          flex:    1,
+          bgcolor: color,
+          mt:      .5
         }}
       />
     </Box>
@@ -54,11 +65,11 @@ function UpdateDialog() {
   }, [ setClosedChangelog ])
 
   return (
-    <Dialog 
+    <Dialog
       maxWidth="sm"
       onClose={handleClose}
-      open={false && closedChangelog !== buildDate} 
-      scroll="paper" 
+      open={false && closedChangelog !== buildDate}
+      scroll="paper"
       fullWidth
     >
       <DialogTitle>
@@ -78,10 +89,12 @@ function UpdateDialog() {
               </b>
 
               <br />
-              When you click on a native db link it should now open as a PWA, provided you have it installed as one. This feature requires the &quot;enable-desktop-pwas-link-capturing&quot; flag to be enabled.
+              When you click on a native db link it should now open as a PWA, provided you have it
+              installed as one. This feature requires
+              the &quot;enable-desktop-pwas-link-capturing&quot; flag to be enabled.
             </ListItem>
           </UnorderedList>
-        </Typography> 
+        </Typography>
 
         {/* <Header type="fix">
           Fixes and Changes
@@ -112,4 +125,5 @@ function UpdateDialog() {
     </Dialog>
   )
 }
+
 export default memo(UpdateDialog)

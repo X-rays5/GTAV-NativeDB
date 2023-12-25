@@ -3,11 +3,11 @@ import { Namespace, Native } from '../context'
 import useNatives from './useNatives'
 
 interface SearchData {
-  name       ?: string
-  namespace  ?: string
-  build      ?: string
+  name?: string
+  namespace?: string
+  build?: string
   description?: string
-  all         : string
+  all: string
 }
 
 function parseSearchQuery(searchQuery: string) {
@@ -23,8 +23,7 @@ function parseSearchQuery(searchQuery: string) {
     const matches = m.filter(m => m)
     if (matches.length === 2) {
       result.all += m[0]
-    }
-    else if (matches.length === 4) {
+    } else if (matches.length === 4) {
       switch (matches[2]) {
         case 'name':
           result.name = matches[3].trim()
@@ -76,7 +75,7 @@ function matchNativeLoose(search: string, native: Native) {
       .indexOf(search) !== -1
     : true
 
-  return nameMatches 
+  return nameMatches
     || buildMatches
     || namespaceMatches
     || descriptionMatches
@@ -92,8 +91,7 @@ function matchNativeStrict(searchData: SearchData, native: Native) {
         break
       }
     }
-  }
-  else {
+  } else {
     nameMatches = true
   }
 
@@ -111,7 +109,7 @@ function matchNativeStrict(searchData: SearchData, native: Native) {
       .indexOf(searchData.description) !== -1
     : true
 
-  return nameMatches 
+  return nameMatches
     && buildMatches
     && namespaceMatches
     && descriptionMatches
@@ -121,7 +119,7 @@ export default function useNativeSearch(searchQuery: string) {
   const natives = useNatives()
   return useMemo(() => {
     const searchData = parseSearchQuery(searchQuery)
-    return Object.values(natives).reduce<{[name: string]: Namespace}>((accumulator, native) => {
+    return Object.values(natives).reduce<{ [name: string]: Namespace }>((accumulator, native) => {
       if (matchNativeStrict(searchData, native) && matchNativeLoose(searchData.all, native)) {
         if (!accumulator[native.namespace]) {
           accumulator[native.namespace] = {

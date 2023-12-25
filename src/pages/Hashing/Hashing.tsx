@@ -1,11 +1,33 @@
-import { Box, Button, Container, Divider, FormControl, Grid, InputLabel, List, ListItemButton, ListItemText, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, ToggleButton, ToggleButtonGroup, Tooltip, Typography, styled } from '@mui/material'
-import { Remove as SignedIcon, Add as UnsignedIcon, Tag as HexIcon } from '@mui/icons-material'
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  FormControl,
+  Grid,
+  InputLabel,
+  List,
+  ListItemButton,
+  ListItemText,
+  MenuItem,
+  Paper,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  styled,
+  TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+  Tooltip,
+  Typography
+} from '@mui/material'
+import { Add as UnsignedIcon, Remove as SignedIcon, Tag as HexIcon } from '@mui/icons-material'
 import { v4 as uuid } from 'uuid'
 import { ChangeEvent, Fragment, useCallback, useMemo, useState } from 'react'
-import { HashingAlgorithm, HashingFormat, formatHash, hashInput } from './backend'
+import { formatHash, HashingAlgorithm, HashingFormat, hashInput } from './backend'
 import useLocalStorageState from 'use-local-storage-state'
 
-const ToolsContainer = styled(Paper)(({ theme } ) => ({
+const ToolsContainer = styled(Paper)(({ theme }) => ({
   display:      'flex',
   alignItems:   'center',
   padding:      theme.spacing(1),
@@ -23,7 +45,7 @@ export default function Hashing() {
   const [ algorithm, setAlgorithm ] = useLocalStorageState<HashingAlgorithm>('Hashing-algorithm', { defaultValue: 'atStringHash' })
   const [ format, setFormat ] = useLocalStorageState<HashingFormat>('Hashing-format', { defaultValue: 'hex' })
   const [ input, setInput ] = useState('')
-  const [ rawOutput, setRawOutput ] = useState<([bigint, number]|undefined)[]>([])
+  const [ rawOutput, setRawOutput ] = useState<([ bigint, number ] | undefined)[]>([])
   const [ history, setHistory ] = useLocalStorageState<HistoryItem[]>('Hashing-history', { defaultValue: []})
 
   const handleAlgorithmChange = useCallback((e: SelectChangeEvent<string>) => {
@@ -141,9 +163,9 @@ export default function Hashing() {
 
         <Box sx={{ flex: 1 }} />
 
-        <Button 
-          color="primary" 
-          disabled={!input} 
+        <Button
+          color="primary"
+          disabled={!input}
           onClick={handleHash}
           size="medium"
           sx={{ ml: 2 }}
@@ -164,7 +186,7 @@ export default function Hashing() {
             Input
           </Typography>
 
-          <TextField 
+          <TextField
             onChange={handleInputChange}
             rows={10}
             value={input}
@@ -199,7 +221,7 @@ export default function Hashing() {
             sx={{
               display:        'flex',
               alignItems:     'center',
-              justifyContent: 'space-between' 
+              justifyContent: 'space-between'
             }}
           >
             <Typography component="h2" variant="h5" gutterBottom>
@@ -208,9 +230,9 @@ export default function Hashing() {
               /20)
             </Typography>
 
-            <Button 
-              color="error" 
-              disabled={!history.length} 
+            <Button
+              color="error"
+              disabled={!history.length}
               onClick={handleClearHistory}
               size="small"
             >
@@ -219,14 +241,18 @@ export default function Hashing() {
           </Box>
 
           <List>
-            {history.map(({ input, algorithm, key }, i) => (
+            {history.map(({
+              input,
+              algorithm,
+              key
+            }, i) => (
               <Fragment key={key}>
                 {!!i && <Divider />}
 
                 <ListItemButton onClick={() => loadHistoryItem(i)}>
                   <ListItemText
                     primary={
-                      <Typography 
+                      <Typography
                         sx={{ whiteSpace: 'pre-wrap' }}
                         variant="body1"
                       >
@@ -242,5 +268,5 @@ export default function Hashing() {
         </Grid>
       </Grid>
     </Container>
-  ) 
+  )
 }

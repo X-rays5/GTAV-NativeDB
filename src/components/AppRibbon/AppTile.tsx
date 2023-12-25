@@ -9,7 +9,7 @@ const Container = styled(ButtonBase)(({ theme }) => ({
   borderRadius:    theme.shape.borderRadius,
   transition:      'background-color 0.1s ease-in-out',
   '&:hover':       { backgroundColor: alpha(theme.palette.getContrastText(theme.palette.background.paper), 0.1) },
-  
+
   '&.active': {
     background: alpha(theme.palette.primary.light, 0.08),
     border:     `1px solid ${theme.palette.primary.main}`,
@@ -24,18 +24,22 @@ export interface AppTileProps {
   url: string
 }
 
-export default function AppTile({ icon, text, url }: AppTileProps) {
+export default function AppTile({
+  icon,
+  text,
+  url
+}: AppTileProps) {
   const active = useMemo(() => {
     return window.origin === url
   }, [ url ])
 
   return (
-    <Container 
-      className={active ? 'active' : ''} 
+    <Container
+      className={active ? 'active' : ''}
       // https://github.com/mui/material-ui/issues/31194
       // @ts-ignore
-      component="a" 
-      disabled={active} 
+      component="a"
+      disabled={active}
       href={url}
       target="_blank"
     >
@@ -43,7 +47,7 @@ export default function AppTile({ icon, text, url }: AppTileProps) {
         sx={{
           display:  'inline-flex',
           fontSize: 36,
-          pb:       1 
+          pb:       1
         }}
       >
         {icon}

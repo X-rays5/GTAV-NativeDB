@@ -25,8 +25,7 @@ export default function ThemeJsonEditor({ themeId }: ThemeJsonEditorProps) {
     try {
       const obj = JSON.parse(input)
       patchTheme(themeId, obj)
-    }
-    catch {
+    } catch {
       setError(true)
     }
   }, [ patchTheme, themeId, input ])

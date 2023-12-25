@@ -1,10 +1,7 @@
 import { Box, Popover, useTheme } from '@mui/material'
 import InteractiveText from '../InteractiveText'
 import { Fragment } from 'react'
-import {
-  bindTrigger,
-  bindPopover
-} from 'material-ui-popup-state/hooks'
+import { bindPopover, bindTrigger } from 'material-ui-popup-state/hooks'
 import PopupState from 'material-ui-popup-state'
 import ConstDefinition from '../ConstDefinition'
 
@@ -13,7 +10,10 @@ export interface NativeConstProps {
   popover?: boolean
 }
 
-export default function NativeConst({ constName, popover }: NativeConstProps) {
+export default function NativeConst({
+  constName,
+  popover
+}: NativeConstProps) {
   const theme = useTheme()
 
   if (popover) {
@@ -21,7 +21,11 @@ export default function NativeConst({ constName, popover }: NativeConstProps) {
       <PopupState variant="popover">
         {(popupState) => (
           <Fragment>
-            <Box component="span" sx={{ color: theme.extensions.constantIdentifierHighlight }} {...bindTrigger(popupState)}>
+            <Box
+              component="span"
+              sx={{ color: theme.extensions.constantIdentifierHighlight }}
+              {...bindTrigger(popupState)}
+            >
               <InteractiveText>
                 {constName}
               </InteractiveText>
@@ -29,8 +33,8 @@ export default function NativeConst({ constName, popover }: NativeConstProps) {
 
             <Popover
               {...bindPopover(popupState)}
-              PaperProps={{ 
-                sx: { 
+              PaperProps={{
+                sx: {
                   border:     `solid 1px ${theme.extensions.typeInfoBorderColor}`,
                   whiteSpace: 'nowrap',
                   overflowX:  'auto'

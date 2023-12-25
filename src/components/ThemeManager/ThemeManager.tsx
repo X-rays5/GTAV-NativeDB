@@ -9,9 +9,12 @@ import { useThemesContext } from '../../context'
 
 function useCreateTheme(setSelectedTheme: (id: string) => void) {
   const { addTheme } = useThemesContext()
-  const { palette, extensions } = useTheme()
+  const {
+    palette,
+    extensions
+  } = useTheme()
   const themes = useThemes()
-  
+
   const numNewThemes = useMemo(() => {
     let max = 0
     for (const theme of Object.values(themes)) {
@@ -76,7 +79,7 @@ function ThemeManager() {
 
   return (
     <Stack gap={2}>
-      <Box 
+      <Box
         sx={{
           display:       'flex',
           flexDirection: 'row',

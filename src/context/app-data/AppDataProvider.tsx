@@ -1,10 +1,10 @@
-import { ReactNode, createContext, memo, useCallback, useEffect, useState } from 'react'
+import { createContext, memo, ReactNode, useCallback, useEffect, useState } from 'react'
 import { useGuardedContext } from '../../hooks'
 
 let updateWasReady: ServiceWorkerRegistration | null = null
 const updateReadyListeners: Set<((sw: ServiceWorkerRegistration) => void)> = new Set()
 
-export function notifyUpdateReady(sw: ServiceWorkerRegistration) { 
+export function notifyUpdateReady(sw: ServiceWorkerRegistration) {
   updateWasReady = sw
   for (const listener of updateReadyListeners) {
     listener(sw)

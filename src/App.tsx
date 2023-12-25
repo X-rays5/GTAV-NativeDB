@@ -6,7 +6,15 @@ import NativeLoader from './NativeLoader'
 import { LoadingScreen } from './pages'
 import Router from './Router'
 import Theme from './Theme'
-import { AppBarSettingsProvider, AppDataProvider, Game, NativeDataProvider, SelectedGameProvider, SettingsProvider, ThemesProvider } from './context'
+import {
+  AppBarSettingsProvider,
+  AppDataProvider,
+  Game,
+  NativeDataProvider,
+  SelectedGameProvider,
+  SettingsProvider,
+  ThemesProvider
+} from './context'
 
 function LoadGate() {
   const namespaces = useNamespaces()

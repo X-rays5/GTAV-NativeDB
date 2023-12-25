@@ -1,4 +1,3 @@
-
 export type SelectedTheme = 'light' | 'dark' | 'system'
 
 export enum NativeSources {

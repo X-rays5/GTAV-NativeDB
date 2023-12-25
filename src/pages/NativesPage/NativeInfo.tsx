@@ -1,4 +1,17 @@
-import { Box, Button, Dialog, IconButton, List, ListItem, ListItemText, Paper, Stack, Tooltip, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  Button,
+  Dialog,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Stack,
+  Tooltip,
+  Typography,
+  useTheme
+} from '@mui/material'
 import { LinkSharp as ShareIcon, OpenInNewSharp as OpenInNewSharpIcon } from '@mui/icons-material'
 import _ from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
@@ -11,7 +24,7 @@ import NoNativeSelected from './NoNativeSelected'
 import Giscus from '@giscus/react'
 
 interface NativeInfoProps {
-  native?: string 
+  native?: string
 }
 
 export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps) {
@@ -46,7 +59,7 @@ export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps)
     )
   }
 
-  if  (!native) {
+  if (!native) {
     return (
       <Box sx={{ p: 2 }}>
         <NativeNotFound nativeHash={nativeHash} />
@@ -61,7 +74,7 @@ export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps)
           display:    'flex',
           alignItems: 'center',
           gap:        1,
-          pb:         1 
+          pb:         1
         }}
       >
         <Tooltip title="Copy Link">
@@ -75,13 +88,13 @@ export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps)
           </IconButton>
         </Tooltip>
 
-        <Typography 
+        <Typography
           component="h1"
-          sx={{ 
-            textOverflow: 'ellipsis', 
-            overflow:     'hidden' 
-          }} 
-          variant="h5" 
+          sx={{
+            textOverflow: 'ellipsis',
+            overflow:     'hidden'
+          }}
+          variant="h5"
         >
           {settings.nativeDisplayMode === 'TS' ? toPascalCase(native.name) : native.name}
         </Typography>
@@ -156,12 +169,12 @@ export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps)
             <Paper>
               <List>
                 {native.oldNames.map(oldName => (
-                  <ListItem 
+                  <ListItem
                     key={oldName}
                     sx={{
                       textOverflow: 'ellipsis',
                       overflow:     'hidden'
-                    }} 
+                    }}
                     dense
                   >
                     <ListItemText primary={oldName} />
@@ -179,16 +192,16 @@ export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps)
             </Typography>
 
             <Paper>
-              <NativeUsage 
+              <NativeUsage
                 nativeHash={nativeHash}
-                onNotFound={onUsageNotFound} 
+                onNotFound={onUsageNotFound}
               />
             </Paper>
           </div>
         )}
 
         {game === Game.RedDeadRedemption2 && native.gtaHash && (
-          <Button 
+          <Button
             color="inherit"
             onClick={() => setShowGta5Definition(native.gtaHash!)}
             startIcon={<OpenInNewSharpIcon />}

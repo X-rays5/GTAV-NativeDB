@@ -1,5 +1,17 @@
 import { CloseOutlined as CloseIcon } from '@mui/icons-material'
-import { Box, Checkbox, Divider, Drawer, FormControlLabel, IconButton, Link, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import {
+  Box,
+  Checkbox,
+  Divider,
+  Drawer,
+  FormControlLabel,
+  IconButton,
+  Link,
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography
+} from '@mui/material'
 import { Fragment, useCallback } from 'react'
 import { useIsSmallDisplay, useSettings } from '../../hooks'
 import LocalFileUpload from '../LocalFileUpload/LocalFileUpload'
@@ -12,7 +24,10 @@ interface SettingsDrawerProps {
   onClose: (_: false) => void
 }
 
-export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
+export default function SettingsDrawer({
+  open,
+  onClose
+}: SettingsDrawerProps) {
   const smallDisplay = useIsSmallDisplay()
   const settings = useSettings()
   const { patchSettings } = useSettingsContext()

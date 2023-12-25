@@ -14,7 +14,7 @@ function hashWithAlgorithm(input: string, algo: HashingAlgorithm): number | bigi
   }
 }
 
-function hashLine(line: string, algo: HashingAlgorithm): [bigint, number] | undefined {
+function hashLine(line: string, algo: HashingAlgorithm): [ bigint, number ] | undefined {
   const trimmed = line.trim()
   const hash = hashWithAlgorithm(trimmed, algo)
   if (hash !== undefined) {
@@ -23,7 +23,7 @@ function hashLine(line: string, algo: HashingAlgorithm): [bigint, number] | unde
   }
 }
 
-export function hashInput(input: string, algo: HashingAlgorithm): ([bigint, number] | undefined)[] {
+export function hashInput(input: string, algo: HashingAlgorithm): ([ bigint, number ] | undefined)[] {
   return input
     .replaceAll('\r', '')
     .split('\n')
@@ -32,7 +32,7 @@ export function hashInput(input: string, algo: HashingAlgorithm): ([bigint, numb
 }
 
 
-export function formatHash(hashInput: [bigint, number] | undefined, format: HashingFormat): string {
+export function formatHash(hashInput: [ bigint, number ] | undefined, format: HashingFormat): string {
   if (hashInput === undefined) {
     return '<ERROR>'
   }

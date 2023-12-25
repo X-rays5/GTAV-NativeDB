@@ -1,4 +1,3 @@
-
 export interface NativeParam {
   type: string
   name: string

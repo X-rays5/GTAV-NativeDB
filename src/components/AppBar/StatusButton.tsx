@@ -1,12 +1,12 @@
-import { Tooltip, IconButton } from '@mui/material'
+import { IconButton, Tooltip } from '@mui/material'
 import { CloudOff as OfflineIcon, Update as UpdateIcon } from '@mui/icons-material'
 import { useCallback, useState } from 'react'
-import { useOnlineStatus, useUpdateAvailable } from '../../hooks'
-import { useUpdateServiceWorker } from '../../hooks'
+import { useOnlineStatus, useUpdateAvailable, useUpdateServiceWorker } from '../../hooks'
 
 interface StatusIconProps {
   status: string
 }
+
 function StatusIcon({ status }: StatusIconProps) {
   switch (status) {
     case 'offline':
@@ -28,7 +28,7 @@ export default function StatusButton() {
   const onlineStatus = useOnlineStatus()
   const updateAvailable = useUpdateAvailable()
   const [ loading, setLoading ] = useState(false)
-  const status = onlineStatus 
+  const status = onlineStatus
     ? updateAvailable ? 'update' : ''
     : 'offline'
 

@@ -1,16 +1,21 @@
-import { Typography, TypographyProps, Link } from '@mui/material'
+import { Link, Typography, TypographyProps } from '@mui/material'
 import { memo } from 'react'
 import Linkify from 'react-linkify'
 
-export interface NativeCommentProps extends TypographyProps {}
+export interface NativeCommentProps extends TypographyProps {
+}
 
-function NativeComment({ children, sx, ...rest }: NativeCommentProps) {
+function NativeComment({
+  children,
+  sx,
+  ...rest
+}: NativeCommentProps) {
   return (
     <Typography
       sx={{
         whiteSpace: 'pre-wrap',
         wordBreak:  'break-word',
-        ...sx 
+        ...sx
       }}
       {...rest}
     >
@@ -26,4 +31,5 @@ function NativeComment({ children, sx, ...rest }: NativeCommentProps) {
     </Typography>
   )
 }
+
 export default memo(NativeComment)

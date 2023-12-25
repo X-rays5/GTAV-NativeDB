@@ -3,8 +3,8 @@ import { useCallback } from 'react'
 import { useCopyToClipboard } from '../../hooks'
 import InteractiveText from '../InteractiveText'
 
-export interface CopyableTextProps { 
-  children?: string 
+export interface CopyableTextProps {
+  children?: string
 }
 
 export default function CopyableText({ children }: CopyableTextProps) {
@@ -17,7 +17,7 @@ export default function CopyableText({ children }: CopyableTextProps) {
   if (!children) {
     return null
   }
-  
+
   return (
     <Tooltip placement="top" title="Copy to clipboard" arrow>
       <InteractiveText onClick={onClick}>

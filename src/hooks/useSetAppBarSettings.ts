@@ -3,7 +3,10 @@ import { AppBarSettings } from '../components'
 import { useAppBarSettingsContext } from '../context'
 
 export default function useSetAppBarSettings(id: string, settings: AppBarSettings) {
-  const { registerAppBarSettings, removeAppBarSettings } = useAppBarSettingsContext()
+  const {
+    registerAppBarSettings,
+    removeAppBarSettings
+  } = useAppBarSettingsContext()
 
   useEffect(() => {
     registerAppBarSettings(id, settings)

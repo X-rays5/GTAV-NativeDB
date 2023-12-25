@@ -2,18 +2,13 @@ import CodeGeneratorBase, { CodeGeneratorBaseSettings, splitCamelCaseString } fr
 import { CodeGenNative, CodeGenParam, CodeGenType } from './ICodeGenerator'
 
 export interface RustCodeGeneratorSettings extends CodeGeneratorBaseSettings {
-  rustNames         : boolean
-  generateComments  : boolean
-  oneLineFunctions  : boolean
-  includeNdbLinks   : boolean
+  rustNames: boolean
+  generateComments: boolean
+  oneLineFunctions: boolean
+  includeNdbLinks: boolean
 }
 
-export default
-class RustCodeGenerator extends CodeGeneratorBase<RustCodeGeneratorSettings> {
-  private transformNativeName(name: string): string {
-    return name.toLowerCase()
-  }
-
+export default class RustCodeGenerator extends CodeGeneratorBase<RustCodeGeneratorSettings> {
   start(): this {
     return super.start()
       .writeBlankLine()
@@ -28,23 +23,32 @@ class RustCodeGenerator extends CodeGeneratorBase<RustCodeGeneratorSettings> {
 
   transformBaseType(type: string, isPointer: boolean): string {
     switch (type) {
-      case 'void' : return 'Void'
-      case 'BOOL' : return isPointer ? 'Bool'  : 'bool'
-      case 'int'  : return 'i32'
-      case 'float': return 'f32'
-      case 'char' : return 'i8'
-      default: return type
+      case 'void' :
+        return 'Void'
+      case 'BOOL' :
+        return isPointer ? 'Bool' : 'bool'
+      case 'int'  :
+        return 'i32'
+      case 'float':
+        return 'f32'
+      case 'char' :
+        return 'i8'
+      default:
+        return type
     }
   }
 
   addNative(native: CodeGenNative): this {
-    const name         = this.settings.rustNames ? this.transformNativeName(native.name) : native.name
-    const params       = native.params.map(({ type, name }) => `${this.formatParamName(name)}: ${this.formatType(type)}`).join(', ')
-    const returnType   = this.formatType(native.returnType)
+    const name = this.settings.rustNames ? this.transformNativeName(native.name) : native.name
+    const params = native.params.map(({
+      type,
+      name
+    }) => `${this.formatParamName(name)}: ${this.formatType(type)}`).join(', ')
+    const returnType = this.formatType(native.returnType)
     const invokeParams = [ returnType, `${native.hash}u64`, ...native.params.map(p => this.formatInvokeParam(p)) ].join(', ')
-    const invoker      = 'call_native!'
-    const link         =  `${window.location.origin}/natives/${native.hash}`
-    const isVoid       = returnType === 'Void'
+    const invoker = 'call_native!'
+    const link = `${window.location.origin}/natives/${native.hash}`
+    const isVoid = returnType === 'Void'
 
     return this
       .conditional(this.settings.generateComments, gen => gen.writeComment(native.comment, true))
@@ -91,30 +95,38 @@ class RustCodeGenerator extends CodeGeneratorBase<RustCodeGeneratorSettings> {
     return '}'
   }
 
+  private transformNativeName(name: string): string {
+    return name.toLowerCase()
+  }
+
   private formatType(type: CodeGenType): string {
     const { baseType } = type
 
     if (type.pointers) {
       return `${'*'.repeat(type.pointers)}${type.isConst ? 'const' : 'mut'} ${baseType}`
-    }
-    else {
+    } else {
       return baseType
     }
   }
 
   private formatParamName(name: string): string {
-    const tmp = this.settings.rustNames 
-      ? splitCamelCaseString(name).map(s => s.toLowerCase()).join('_') 
+    const tmp = this.settings.rustNames
+      ? splitCamelCaseString(name).map(s => s.toLowerCase()).join('_')
       : name
 
     switch (tmp) {
       // I can't be bothered with this
-      case 'unk__4_0_0_0_0f': return 'unk'
+      case 'unk__4_0_0_0_0f':
+        return 'unk'
 
-      case 'type'    : return '_type'
-      case 'override': return '_override'
-      case 'loop'    : return '_loop'
-      default        : return tmp
+      case 'type'    :
+        return '_type'
+      case 'override':
+        return '_override'
+      case 'loop'    :
+        return '_loop'
+      default        :
+        return tmp
     }
   }
 

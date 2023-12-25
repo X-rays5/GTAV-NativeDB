@@ -1,5 +1,5 @@
 import { Box, IconButton, InputBase, styled, useTheme } from '@mui/material'
-import { Search as SearchIcon, Clear as ClearIcon } from '@mui/icons-material'
+import { Clear as ClearIcon, Search as SearchIcon } from '@mui/icons-material'
 import { AppBarSearch } from './model'
 import { useCallback, useEffect, useState } from 'react'
 import { useIsExtraSmallDisplay } from '../../hooks'
@@ -17,7 +17,11 @@ interface StyleProps {
   }
 }
 
-const Search = styled('div')<StyleProps>(({ theme, inner, outer }) => ({
+const Search = styled('div')<StyleProps>(({
+  theme,
+  inner,
+  outer
+}) => ({
   position:          'relative',
   margin:            theme.spacing(0, 2),
   borderRadius:      theme.shape.borderRadius,
@@ -93,7 +97,7 @@ function setNativeValue(element: HTMLInputElement, value: string) {
 export default function DesktopSearch({ search }: DesktopSearchProps) {
   const theme = useTheme()
   const extraSmallDisplay = useIsExtraSmallDisplay()
-  const [ outerBox, setOuterBox ] = useState<HTMLDivElement|null>(null)
+  const [ outerBox, setOuterBox ] = useState<HTMLDivElement | null>(null)
   const [ innerBox, setInnerBox ] = useState<HTMLDivElement | null>(null)
   const [ state, setState ] = useState({
     inner: {
@@ -116,7 +120,7 @@ export default function DesktopSearch({ search }: DesktopSearchProps) {
       current.focus()
     }
   }, [ search ])
-  
+
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Escape') {
       search.ref?.current?.blur()

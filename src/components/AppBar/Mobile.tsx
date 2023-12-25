@@ -1,5 +1,15 @@
-import { AppBar as MaterialAppBar, Box, IconButton, Link, ListItemIcon, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
-import { MoreVert as MoreIcon,  ShowChart as StatsIcon, Code as CodeIcon } from '@mui/icons-material'
+import {
+  AppBar as MaterialAppBar,
+  Box,
+  IconButton,
+  Link,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography
+} from '@mui/material'
+import { Code as CodeIcon, MoreVert as MoreIcon, ShowChart as StatsIcon } from '@mui/icons-material'
 import React, { MouseEvent, MouseEventHandler, useCallback, useMemo, useState } from 'react'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import { AppBarAction as AppBarActionProps } from '.'
@@ -10,15 +20,22 @@ import StatusButton from './StatusButton'
 import DesktopSearch from './DesktopSearch'
 import { Game, useSelectedGameContext } from '../../context'
 
-function AppBarAction({ text, mobileIcon, buttonProps: { href, target, onClick }}: AppBarActionProps) {
+function AppBarAction({
+  text,
+  mobileIcon,
+  buttonProps: {
+    href,
+    target,
+    onClick
+  }
+}: AppBarActionProps) {
   const navigate = useNavigate()
 
   const handleClick = useCallback<MouseEventHandler<HTMLElement>>(e => {
     if (href) {
       if (href.includes('://') || target) {
         window.open(href, target)
-      }
-      else {
+      } else {
         navigate(href)
       }
     }
@@ -100,7 +117,7 @@ function Mobile({ ...rest }: AppBarProps) {
             <Box
               sx={{
                 flex: 1,
-                ml:   2 
+                ml:   2
               }}
             >
               <DesktopSearch search={settings.search} />
@@ -133,4 +150,5 @@ function Mobile({ ...rest }: AppBarProps) {
     </Box>
   )
 }
+
 export default Mobile

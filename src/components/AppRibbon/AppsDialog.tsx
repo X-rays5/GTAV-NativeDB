@@ -6,7 +6,10 @@ interface Props {
   onClose: () => void
 }
 
-export default function AppsDialog({ open, onClose }: Props) {
+export default function AppsDialog({
+  open,
+  onClose
+}: Props) {
   return (
     <Dialog
       maxWidth="xs"

@@ -26,13 +26,13 @@ function HashDefinition({ constName }: ConstDefinitionProps) {
       sx={{
         p:          1,
         fontFamily: '"Roboto Mono", monospace',
-        color:      theme.extensions.nativeValueHighlight 
+        color:      theme.extensions.nativeValueHighlight
       }}
       variant="body2"
     >
       <NativeConst constName={constName} />
 
-&nbsp;=&nbsp;
+      &nbsp;=&nbsp;
       <CopyableText>
         {hash}
       </CopyableText>
@@ -46,7 +46,7 @@ function EnumDefinitionForConst({ constName }: ConstDefinitionProps) {
   if (!enumDefinition) {
     return (
       <Typography sx={{ p: 1 }} variant="body2">
-        No value information for 
+        No value information for
         {' '}
         <NativeConst constName={constName} />
         .
@@ -55,8 +55,8 @@ function EnumDefinitionForConst({ constName }: ConstDefinitionProps) {
   }
 
   return (
-    <EnumDefinition 
-      highlightValue={constName} 
+    <EnumDefinition
+      highlightValue={constName}
       type={enumDefinition}
     />
   )
@@ -81,7 +81,7 @@ export default function ConstDefinition({ constName }: ConstDefinitionProps) {
     <Typography
       sx={{
         p:          1,
-        fontFamily: '"Roboto Mono", monospace' 
+        fontFamily: '"Roboto Mono", monospace'
       }}
       variant="body2"
     >

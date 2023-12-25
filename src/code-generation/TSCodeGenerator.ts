@@ -17,12 +17,19 @@ export function convertTypeToTS(type: string, useNativeTypes: boolean, convertHa
   type = type.replaceAll('*', '').replaceAll('const', '').trim()
 
   switch (type) {
-    case 'int': return 'number'
-    case 'float': return 'number'
-    case 'char': return 'string'
-    case 'BOOL': return 'boolean'
-    case 'Any': return 'any'
-    case 'Object': type = 'ObjectEntity'; break
+    case 'int':
+      return 'number'
+    case 'float':
+      return 'number'
+    case 'char':
+      return 'string'
+    case 'BOOL':
+      return 'boolean'
+    case 'Any':
+      return 'any'
+    case 'Object':
+      type = 'ObjectEntity'
+      break
   }
 
   if (!useNativeTypes) {
@@ -30,24 +37,36 @@ export function convertTypeToTS(type: string, useNativeTypes: boolean, convertHa
   }
 
   switch (type) {
-    case 'Hash': return convertHashes ? 'number | string' : 'number'
-    case 'Ped': return 'number'
-    case 'Vehicle': return 'number'
-    case 'Blip': return 'number'
-    case 'Cam': return 'number'
-    case 'ObjectEntity': return 'number'
-    case 'Player': return 'number'
-    case 'Entity': return 'number'
-    case 'ScrHandle': return 'number'
-    case 'FireId': return 'number'
-    case 'Pickup': return 'number'
-    case 'Interior': return 'number'
-    default: return type
+    case 'Hash':
+      return convertHashes ? 'number | string' : 'number'
+    case 'Ped':
+      return 'number'
+    case 'Vehicle':
+      return 'number'
+    case 'Blip':
+      return 'number'
+    case 'Cam':
+      return 'number'
+    case 'ObjectEntity':
+      return 'number'
+    case 'Player':
+      return 'number'
+    case 'Entity':
+      return 'number'
+    case 'ScrHandle':
+      return 'number'
+    case 'FireId':
+      return 'number'
+    case 'Pickup':
+      return 'number'
+    case 'Interior':
+      return 'number'
+    default:
+      return type
   }
 }
 
-export default
-class TSCodeGenerator extends CodeGeneratorBase<TSCodeGeneratorSettings> {
+export default class TSCodeGenerator extends CodeGeneratorBase<TSCodeGeneratorSettings> {
   start(): this {
     return super.start()
       .writeComment(`Generated on ${new Date().toLocaleString()}`)
@@ -61,25 +80,6 @@ class TSCodeGenerator extends CodeGeneratorBase<TSCodeGeneratorSettings> {
 
   transformBaseType(type: string): string {
     return convertTypeToTS(type, this.settings.useNativeTypes, this.settings.convertHashes)
-  }
-
-  private transformReturnType(type: string): string {
-    switch (type) {
-      case 'Vector2':
-        return 'number[]'
-      case 'Vector3':
-        return 'number[]'
-      case 'Vector4':
-        return 'number[]'
-      case 'string | number':
-        return 'number'
-    }
-    return type
-  }
-
-  private formatParam({ name, type }: CodeGenParam): string {
-    if (name === 'var') name = 'variable'
-    return `${name}: ${this.formatType(type)}`
   }
 
   addNative(native: CodeGenNative): this {
@@ -124,13 +124,38 @@ class TSCodeGenerator extends CodeGeneratorBase<TSCodeGeneratorSettings> {
     return '}'
   }
 
+  private transformReturnType(type: string): string {
+    switch (type) {
+      case 'Vector2':
+        return 'number[]'
+      case 'Vector3':
+        return 'number[]'
+      case 'Vector4':
+        return 'number[]'
+      case 'string | number':
+        return 'number'
+    }
+    return type
+  }
+
+  private formatParam({
+    name,
+    type
+  }: CodeGenParam): string {
+    if (name === 'var') name = 'variable'
+    return `${name}: ${this.formatType(type)}`
+  }
+
   private formatType(type: CodeGenType): string {
     const { baseType } = type
 
     return `${baseType}`
   }
 
-  private formatInvokeParam({ name, type }: CodeGenParam, convertHashes: boolean): string {
+  private formatInvokeParam({
+    name,
+    type
+  }: CodeGenParam, convertHashes: boolean): string {
     if (name === 'var') name = 'variable'
 
     switch (type.baseType) {

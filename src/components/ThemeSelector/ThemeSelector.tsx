@@ -65,7 +65,7 @@ export default function ThemeSelector() {
         icon={LightIcon}
         label="Light Theme"
       >
-        <Autocomplete 
+        <Autocomplete
           getOptionLabel={(id) => themes[id]?.name ?? id}
           onChange={handleLightThemeChanged}
           options={themeIds}
@@ -78,7 +78,7 @@ export default function ThemeSelector() {
         />
       </SettingsControl>
 
-      <SettingsControl 
+      <SettingsControl
         icon={DarkIcon}
         label="Dark Theme"
       >

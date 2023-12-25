@@ -7,7 +7,11 @@ import { Native } from '../../context'
 const LISTBOX_PADDING = 8
 
 function renderRow(props: ListChildComponentProps) {
-  const { data, index, style } = props
+  const {
+    data,
+    index,
+    style
+  } = props
   return React.cloneElement(data[index], {
     style: {
       ...style,
@@ -35,9 +39,12 @@ interface Props {
 // Adapter for react-window
 const ListboxComponent = React.forwardRef<HTMLDivElement>(function ListboxComponent(
   props: Props,
-  ref,
+  ref
 ) {
-  const { children, ...other } = props
+  const {
+    children,
+    ...other
+  } = props
   const itemData = React.Children.toArray(children)
   const theme = useTheme()
   const smUp = useMediaQuery(theme.breakpoints.up('sm'), { noSsr: true })
@@ -80,7 +87,11 @@ interface NativeSelectProps {
   sx?: AutocompleteProps<Native, true, true, true>['sx']
 }
 
-function NativeSelect({ value, onChange, sx }: NativeSelectProps) {
+function NativeSelect({
+  value,
+  onChange,
+  sx
+}: NativeSelectProps) {
   const natives = useNatives()
   const nativesArray = useMemo(() => Object.values(natives), [ natives ])
 
@@ -91,9 +102,9 @@ function NativeSelect({ value, onChange, sx }: NativeSelectProps) {
       onChange={(e, native) => native && onChange(native.hash)}
       options={nativesArray}
       renderInput={(params) => (
-        <TextField 
-          {...params} 
-          label="Preview Native" 
+        <TextField
+          {...params}
+          label="Preview Native"
         />
       )}
       renderOption={(props, option) => (
@@ -111,4 +122,5 @@ function NativeSelect({ value, onChange, sx }: NativeSelectProps) {
     />
   )
 }
+
 export default memo(NativeSelect)

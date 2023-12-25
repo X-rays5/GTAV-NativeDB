@@ -1,4 +1,4 @@
-import { ReactNode, createContext, memo, useCallback, useState } from 'react'
+import { createContext, memo, ReactNode, useCallback, useState } from 'react'
 import { AppBarSettings } from '../../components'
 import _ from 'lodash'
 import { useGuardedContext } from '../../hooks'
@@ -22,7 +22,7 @@ export interface AppBarSettingsProviderProps {
 export const AppBarSettingsProvider = memo(function AppBarSettingsProvider({ children }: AppBarSettingsProviderProps) {
   const [ settings, setSettings ] = useState<AppBarSettingsContext['settings']>({})
 
-  const registerAppBarSettings = useCallback<AppBarSettingsContext['registerAppBarSettings']>((id, settings ) => {
+  const registerAppBarSettings = useCallback<AppBarSettingsContext['registerAppBarSettings']>((id, settings) => {
     setSettings(s => ({
       ...s,
       [id]: settings

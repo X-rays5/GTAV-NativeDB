@@ -13,8 +13,8 @@ const Container = styled(Paper)(({ theme }) => ({
 }))
 
 const Label = styled(Typography)({
-  flex:       1, 
-  display:    'flex', 
+  flex:       1,
+  display:    'flex',
   alignItems: 'center'
 })
 
@@ -25,11 +25,16 @@ export interface SettingsControlProps {
   icon?: SvgIconComponent
 }
 
-function SettingsControl({ icon, label, children, sx }: SettingsControlProps) {
+function SettingsControl({
+  icon,
+  label,
+  children,
+  sx
+}: SettingsControlProps) {
   return (
     <Container sx={sx} variant="outlined">
       <Label variant="body1">
-        {icon && createElement(icon, { fontSize: 'small' })} 
+        {icon && createElement(icon, { fontSize: 'small' })}
         {' '}
         {label}
       </Label>

@@ -7,7 +7,10 @@ export interface NativeUsageProps {
   onNotFound?: () => void
 }
 
-function NativeUsage({ nativeHash, onNotFound }: NativeUsageProps) {
+function NativeUsage({
+  nativeHash,
+  onNotFound
+}: NativeUsageProps) {
   const [ usageCode, setUsageCode ] = useState<string | null>(null)
 
   useEffect(() => {
@@ -17,8 +20,7 @@ function NativeUsage({ nativeHash, onNotFound }: NativeUsageProps) {
       if (response.ok) {
         const code = await response.text()
         setUsageCode(code)
-      }
-      else {
+      } else {
         onNotFound && onNotFound()
         setUsageCode('')
       }
@@ -31,7 +33,7 @@ function NativeUsage({ nativeHash, onNotFound }: NativeUsageProps) {
         sx={{
           p:              2,
           justifyContent: 'center',
-          display:        'flex' 
+          display:        'flex'
         }}
       >
         <CircularProgress size={36} />
@@ -45,4 +47,5 @@ function NativeUsage({ nativeHash, onNotFound }: NativeUsageProps) {
     </SyntaxHighlighter>
   )
 }
+
 export default memo(NativeUsage)

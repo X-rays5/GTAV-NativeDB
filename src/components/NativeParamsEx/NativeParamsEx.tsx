@@ -11,8 +11,15 @@ export interface NativeParamsExProps extends Omit<BoxProps, 'children'> {
   params: NativeParam[]
 }
 
-export default function NativeParamsEx({ params, ...rest }: NativeParamsExProps) {
-  const { nativeDisplayMode, nativeTypes, compactVectors } = useSettings()
+export default function NativeParamsEx({
+  params,
+  ...rest
+}: NativeParamsExProps) {
+  const {
+    nativeDisplayMode,
+    nativeTypes,
+    compactVectors
+  } = useSettings()
   const { extensions } = useTheme()
 
   params = compactParams(params, compactVectors)
@@ -23,12 +30,16 @@ export default function NativeParamsEx({ params, ...rest }: NativeParamsExProps)
         <Fragment>
           (
 
-          {params.map(({ type, name, defaultValue }, index) => (
+          {params.map(({
+            type,
+            name,
+            defaultValue
+          }, index) => (
             <Box key={name} sx={{ ml: 2 }}>
               {(nativeDisplayMode === 'C') && (
                 <Fragment>
                   <NativeType type={type} popover />
-                &nbsp;
+                  &nbsp;
                 </Fragment>
               )}
 
@@ -39,13 +50,16 @@ export default function NativeParamsEx({ params, ...rest }: NativeParamsExProps)
               {(nativeDisplayMode === 'UML' || nativeDisplayMode === 'TS') && (
                 <Fragment>
                   :&nbsp;
-                  <NativeType type={nativeDisplayMode === 'TS' ? convertTypeToTS(type, nativeTypes) : type} popover />
+                  <NativeType
+                    type={nativeDisplayMode === 'TS' ? convertTypeToTS(type, nativeTypes) : type}
+                    popover
+                  />
                 </Fragment>
               )}
 
               {defaultValue && (
                 <Fragment>
-                &nbsp;=&nbsp;
+                  &nbsp;=&nbsp;
                   <NativeValue value={defaultValue} popover />
                 </Fragment>
               )}

@@ -1,4 +1,4 @@
-import { ButtonBase, Paper, Typography, alpha, styled } from '@mui/material'
+import { alpha, ButtonBase, Paper, styled, Typography } from '@mui/material'
 import { MouseEventHandler, ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -23,20 +23,26 @@ interface RibbonButtonAction {
   activeHref?: undefined
 }
 
-type RibbonButtonProps = (RibbonButtonLink | RibbonButtonExternalLink | RibbonButtonAction) & { children: ReactNode, label: string }
+type RibbonButtonProps = (RibbonButtonLink | RibbonButtonExternalLink | RibbonButtonAction) & {
+  children: ReactNode,
+  label: string
+}
 
 interface ContainerProps {
   active?: boolean
 }
 
-const Container = styled(Paper)<ContainerProps>(({ theme, active }) => ({
+const Container = styled(Paper)<ContainerProps>(({
+  theme,
+  active
+}) => ({
   position: 'relative',
   height:   '2.5rem',
-  
+
   background: active ? alpha(theme.palette.primary.dark, .16) : undefined,
   color:      active ? theme.palette.primary.light : undefined,
 
-  
+
   overflow: 'hidden'
 }))
 
@@ -62,18 +68,25 @@ const Label = styled(Typography)({
   whiteSpace:  'nowrap'
 })
 
-export function RibbonButton({ children, href, target, onClick, activeHref, label }: RibbonButtonProps) {
+export function RibbonButton({
+  children,
+  href,
+  target,
+  onClick,
+  activeHref,
+  label
+}: RibbonButtonProps) {
   const location = useLocation()
 
   if (target) {
     return (
-      <Container variant='outlined'>
-        <ActionArea 
+      <Container variant="outlined">
+        <ActionArea
           // https://github.com/mui/material-ui/issues/31194
           // @ts-ignore
           component="a"
           href={href}
-          target={target}  
+          target={target}
         >
           <Icon>
             {children}
@@ -89,7 +102,7 @@ export function RibbonButton({ children, href, target, onClick, activeHref, labe
   if (href) {
     const active = location?.pathname.includes(activeHref ?? href)
     return (
-      <Container active={active} variant='outlined'>
+      <Container active={active} variant="outlined">
         <ActionArea
           // https://github.com/mui/material-ui/issues/31194
           // @ts-ignore
@@ -109,7 +122,7 @@ export function RibbonButton({ children, href, target, onClick, activeHref, labe
   }
 
   return (
-    <Container variant='outlined'>
+    <Container variant="outlined">
       <ActionArea onClick={onClick}>
         <Icon>
           {children}

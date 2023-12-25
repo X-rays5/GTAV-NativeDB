@@ -3,18 +3,24 @@ import { Fragment, memo } from 'react'
 import CopyableText from '../CopyableText'
 
 export interface NativeDetailsProps extends TypographyProps {
-  hash  : string
+  hash: string
   jhash?: string
   build?: string
 }
 
-function NativeDetails({ hash, jhash, build, sx, ...rest }: NativeDetailsProps) {
+function NativeDetails({
+  hash,
+  jhash,
+  build,
+  sx,
+  ...rest
+}: NativeDetailsProps) {
   return (
     <Typography
       sx={{
         fontFamily: '"Roboto Mono", monospace',
         opacity:    .7,
-        ...sx 
+        ...sx
       }}
       {...rest}
     >
@@ -22,13 +28,13 @@ function NativeDetails({ hash, jhash, build, sx, ...rest }: NativeDetailsProps) 
 
       <CopyableText>
         {hash}
-      </CopyableText> 
+      </CopyableText>
 
       {' '}
 
       <CopyableText>
         {jhash}
-      </CopyableText> 
+      </CopyableText>
 
       {' '}
 
@@ -36,8 +42,9 @@ function NativeDetails({ hash, jhash, build, sx, ...rest }: NativeDetailsProps) 
         <Fragment>
           b{build}
         </Fragment>
-      ) }
+      )}
     </Typography>
   )
 }
+
 export default memo(NativeDetails)

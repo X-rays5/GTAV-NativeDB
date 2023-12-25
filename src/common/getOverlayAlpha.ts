@@ -1,4 +1,3 @@
-
 // Inspired by https://github.com/material-components/material-components-ios/blob/bca36107405594d5b7b16265a5b0ed698f85a5ee/components/Elevation/src/UIColor%2BMaterialElevation.m#L61
 export default function getOverlayAlpha(elevation: number): number {
   let alphaValue

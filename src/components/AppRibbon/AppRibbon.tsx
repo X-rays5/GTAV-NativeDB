@@ -1,5 +1,10 @@
 import { Backdrop, Divider, Fab, Paper, Stack, styled } from '@mui/material'
-import { GitHub as GitHubIcon, Apps as AppsIcon, Settings as SettingsIcon, Menu as HamburgerIcon } from '@mui/icons-material'
+import {
+  Apps as AppsIcon,
+  GitHub as GitHubIcon,
+  Menu as HamburgerIcon,
+  Settings as SettingsIcon
+} from '@mui/icons-material'
 import { MouseEventHandler, ReactNode, useCallback, useState } from 'react'
 import { RibbonButton } from './RibbonButton'
 import SettingsDrawer from './SettingsDrawer'
@@ -77,11 +82,11 @@ export default function AppRibbon({ children }: AppRibbonProps) {
   const handleAppsOpen = useCallback<MouseEventHandler<HTMLElement>>(event => {
     setAppsAnchorEl(event.currentTarget)
   }, [ setAppsAnchorEl ])
-  
+
   const handleApsClose = useCallback(() => {
     setAppsAnchorEl(null)
   }, [ setAppsAnchorEl ])
-  
+
   const handleOpenSettings = useCallback(() => {
     setSettings(true)
   }, [ setSettings ])
@@ -120,7 +125,11 @@ export default function AppRibbon({ children }: AppRibbonProps) {
             <SettingsIcon fontSize="inherit" />
           </RibbonButton>
 
-          <RibbonButton href="https://github.com/DottieDot/GTAV-NativeDB" label="View on GitHub" target="_blank">
+          <RibbonButton
+            href="https://github.com/DottieDot/GTAV-NativeDB"
+            label="View on GitHub"
+            target="_blank"
+          >
             <GitHubIcon fontSize="inherit" />
           </RibbonButton>
 
@@ -148,7 +157,7 @@ export default function AppRibbon({ children }: AppRibbonProps) {
           onClose={handleApsClose}
           open={!!appsAnchorEl}
         />
-      ) : ( 
+      ) : (
         <AppsPopover
           anchorEl={appsAnchorEl}
           anchorOrigin={{

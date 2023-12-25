@@ -1,4 +1,4 @@
-import { ReactNode, createContext, memo } from 'react'
+import { createContext, memo, ReactNode } from 'react'
 import { useGuardedContext } from '../../hooks'
 import { Game } from '../native-data'
 
@@ -13,7 +13,10 @@ export interface SelectedGameProviderProps {
   children: ReactNode
 }
 
-export const SelectedGameProvider = memo(function SelectedGameProvider({ game, children }: SelectedGameProviderProps) {
+export const SelectedGameProvider = memo(function SelectedGameProvider({
+  game,
+  children
+}: SelectedGameProviderProps) {
   return (
     <selectedGameContext.Provider value={game}>
       {children}

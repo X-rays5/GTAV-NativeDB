@@ -1,10 +1,8 @@
-import { Box, BoxProps, Typography, styled, alpha, IconButton, Tooltip  } from '@mui/material'
-import { memo } from 'react'
+import { alpha, Box, BoxProps, IconButton, styled, Tooltip, Typography } from '@mui/material'
+import { memo, useCallback } from 'react'
 import { createShareUrl, getOverlayAlpha } from '../../common'
 import { LinkSharp as ShareIcon } from '@mui/icons-material'
-import { useNamespace } from '../../hooks'
-import { useCopyToClipboard } from '../../hooks'
-import { useCallback } from 'react'
+import { useCopyToClipboard, useNamespace } from '../../hooks'
 import { useSelectedGameContext } from '../../context'
 
 export interface NativeHeaderProps extends Omit<BoxProps, 'children'> {
@@ -22,12 +20,16 @@ const StyledBox = styled(Box)(({ theme }) => ({
   ...(theme.palette.mode === 'dark' && {
     backgroundImage: `linear-gradient(${alpha(
       '#fff',
-      getOverlayAlpha(4),
+      getOverlayAlpha(4)
     )}, ${alpha('#fff', getOverlayAlpha(4))})`
   })
 }))
 
-function NamespaceHeader({ namespace, nativeCount, ...rest }: NativeHeaderProps) {
+function NamespaceHeader({
+  namespace,
+  nativeCount,
+  ...rest
+}: NativeHeaderProps) {
   const firstNative = useNamespace(namespace).natives[0]
   const copyToClipboard = useCopyToClipboard()
   const game = useSelectedGameContext()
@@ -35,7 +37,7 @@ function NamespaceHeader({ namespace, nativeCount, ...rest }: NativeHeaderProps)
   const onShare = useCallback(() => {
     copyToClipboard(createShareUrl(`/natives/${firstNative}`, game))
   }, [ copyToClipboard, firstNative, game ])
-  
+
   return (
     <StyledBox {...rest}>
       <Tooltip title="Copy Link">
@@ -56,11 +58,12 @@ function NamespaceHeader({ namespace, nativeCount, ...rest }: NativeHeaderProps)
       <Box sx={{ flexGrow: 1 }} />
 
       <Typography component="span" textAlign="right" variant="h6">
-        {nativeCount} 
+        {nativeCount}
         {' '}
         {nativeCount === 1 ? 'Native' : 'Natives'}
       </Typography>
     </StyledBox>
   )
 }
+
 export default memo(NamespaceHeader)

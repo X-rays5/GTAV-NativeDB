@@ -1,12 +1,12 @@
-import { Paper, Typography, Box, Button, styled, FormHelperText } from '@mui/material'
+import { Box, Button, FormHelperText, Paper, styled, Typography } from '@mui/material'
 import { Upload as UploadIcon } from '@mui/icons-material'
 import { ChangeEventHandler, DragEventHandler, ReactNode, useCallback } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   background: 'none',
-  padding:    theme.spacing(2), 
-  width:      '100%', 
+  padding:    theme.spacing(2),
+  width:      '100%',
   textAlign:  'center',
   transition: 'all .2s ease-in-out'
 }))
@@ -17,7 +17,11 @@ export interface LocalFileUploadProps {
   helpText: ReactNode
 }
 
-export default function LocalFileUpload({ storeAs, label, helpText }: LocalFileUploadProps) {
+export default function LocalFileUpload({
+  storeAs,
+  label,
+  helpText
+}: LocalFileUploadProps) {
   const [ storedFile, setStoredFile ] = useLocalStorageState<string | null>(storeAs, { defaultValue: null })
 
   const handleFiles = useCallback((files: File[]) => {
@@ -45,7 +49,7 @@ export default function LocalFileUpload({ storeAs, label, helpText }: LocalFileU
   const handleDrop = useCallback<DragEventHandler<HTMLElement>>((e) => {
     e.preventDefault()
 
-    const files = e.dataTransfer.files 
+    const files = e.dataTransfer.files
       ? [ ...e.dataTransfer.files ]
       : [ ...e.dataTransfer.items ]
         .filter(item => item.type === 'file')
@@ -69,7 +73,7 @@ export default function LocalFileUpload({ storeAs, label, helpText }: LocalFileU
         component={(props) => <Button {...props} component="label" variant="outlined" />}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        variant="outlined" 
+        variant="outlined"
       >
         <div>
           <UploadIcon fontSize="medium" />
@@ -94,14 +98,14 @@ export default function LocalFileUpload({ storeAs, label, helpText }: LocalFileU
       </FormHelperText>
 
       {storedFile && (
-        <Button 
+        <Button
           color="error"
-          onClick={handleDelete} 
-          sx={{ mt: 1 }} 
+          onClick={handleDelete}
+          sx={{ mt: 1 }}
           variant="outlined"
           fullWidth
         >
-          Delete 
+          Delete
           {' '}
           {label}
         </Button>

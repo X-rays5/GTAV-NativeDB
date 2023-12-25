@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import { useMemo, Fragment } from 'react'
+import { Fragment, useMemo } from 'react'
 import { TypeDefinitionStruct } from '../../context'
 import NativeType from '../NativeType'
 import NativeValue from '../NativeValue'
@@ -18,7 +18,7 @@ export default function StructDefinition({ type }: StructDefinitionProps) {
       component="div"
       sx={{
         p:          1,
-        fontFamily: '"Roboto Mono", monospace' 
+        fontFamily: '"Roboto Mono", monospace'
       }}
       variant="body2"
     >

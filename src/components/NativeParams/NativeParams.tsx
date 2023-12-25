@@ -10,8 +10,15 @@ export interface NativeParamsProps extends Omit<BoxProps, 'children'> {
   params: NativeParam[]
 }
 
-export default function NativeParams({ params, ...rest }: NativeParamsProps) {
-  const { nativeDisplayMode, nativeTypes, compactVectors } = useSettings()
+export default function NativeParams({
+  params,
+  ...rest
+}: NativeParamsProps) {
+  const {
+    nativeDisplayMode,
+    nativeTypes,
+    compactVectors
+  } = useSettings()
   const { extensions } = useTheme()
 
   params = compactParams(params, compactVectors)
@@ -20,7 +27,10 @@ export default function NativeParams({ params, ...rest }: NativeParamsProps) {
     <Box component="span" sx={{ color: extensions.symbolColor }} {...rest}>
       {'(\u200B'}
 
-      {params.map(({ type, name }, index) => (
+      {params.map(({
+        type,
+        name
+      }, index) => (
         <Fragment key={name}>
           {(nativeDisplayMode === 'C') && (
             <Fragment>

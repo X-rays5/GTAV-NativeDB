@@ -1,7 +1,6 @@
-import { Container, Paper, Typography, Tab, Divider, Box } from '@mui/material'
+import { Box, Container, Divider, Paper, Tab, Typography } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { memo, SyntheticEvent } from 'react'
-import { useCallback } from 'react'
+import { memo, SyntheticEvent, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import CPlusPlus from './CPlusPlus'
 import CSharpEnum from './CSharpEnum'
@@ -23,7 +22,7 @@ function GenerateCodePage() {
       sx={{
         py:       2,
         overflow: 'hidden scroll',
-        flexGrow: 1 
+        flexGrow: 1
       }}
     >
       <Container maxWidth="lg">
@@ -73,4 +72,5 @@ function GenerateCodePage() {
     </Box>
   )
 }
+
 export default memo(GenerateCodePage)

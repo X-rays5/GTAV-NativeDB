@@ -10,17 +10,20 @@ interface Props {
   namespaces: { [name: string]: Namespace }
 }
 
-function JumpToNamespace({ namespaces, onNamespaceClicked }: Props) {
+function JumpToNamespace({
+  namespaces,
+  onNamespaceClicked
+}: Props) {
   const namespaceArray = useMemo(() => Object.values(namespaces), [ namespaces ])
   const [ filter, setFilter ] = useState('')
   const filteredNamespaces = useMemo(
     () => namespaceArray
       .filter(ns => ns.name.toLowerCase()
-        .indexOf(filter.toLowerCase()) !== -1), 
+        .indexOf(filter.toLowerCase()) !== -1),
     [ filter, namespaceArray ]
-  ) 
+  )
   const [ dialogOpen, setDialogOpen ] = useState(false)
-  
+
   const handleFilterChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value)
   }, [ setFilter ])
@@ -52,7 +55,7 @@ function JumpToNamespace({ namespaces, onNamespaceClicked }: Props) {
   useSetAppBarSettings('JumpToNamespace', jumpToNamespaceMemo)
 
   const onKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key  === 'Enter' && filter && filteredNamespaces) {
+    if (e.key === 'Enter' && filter && filteredNamespaces) {
       handleNamespaceSelected(filteredNamespaces[0].name)
       e.preventDefault()
     }
@@ -69,7 +72,7 @@ function JumpToNamespace({ namespaces, onNamespaceClicked }: Props) {
       open={dialogOpen}
       fullWidth
     >
-      <TextField 
+      <TextField
         label="Filter"
         onChange={handleFilterChange}
         onKeyDown={onKeyDown}
@@ -82,18 +85,21 @@ function JumpToNamespace({ namespaces, onNamespaceClicked }: Props) {
       <List
         sx={{
           height:    200,
-          overflowY: 'scroll' 
+          overflowY: 'scroll'
         }}
       >
-        {filteredNamespaces.map(({ name, natives }, index) => (
-          <ListItem 
-            key={name} 
+        {filteredNamespaces.map(({
+          name,
+          natives
+        }, index) => (
+          <ListItem
+            key={name}
             onClick={() => handleNamespaceSelected(name)}
             selected={!!filter && index === 0}
             button
           >
-            <ListItemText 
-              primary={name} 
+            <ListItemText
+              primary={name}
               secondary={`${natives.length} ${natives.length === 1 ? 'native' : 'natives'}`}
             />
           </ListItem>

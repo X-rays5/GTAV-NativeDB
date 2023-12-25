@@ -1,4 +1,4 @@
-import { ReactNode, createContext, memo, useCallback } from 'react'
+import { createContext, memo, ReactNode, useCallback } from 'react'
 import { Theme, ThemeColors } from './model'
 import useLocalStorageState from 'use-local-storage-state'
 import _ from 'lodash'
@@ -47,7 +47,7 @@ export const ThemesProvider = memo(function ThemesProvider({ children }: ThemesP
     }))
   }, [ setThemes ])
 
-  const removeTheme = useCallback<ThemesContext['removeTheme']>((id) => { 
+  const removeTheme = useCallback<ThemesContext['removeTheme']>((id) => {
     setThemes(themes => _.omit(themes, id))
   }, [ setThemes ])
 

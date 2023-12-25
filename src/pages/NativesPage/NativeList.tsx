@@ -27,8 +27,7 @@ export default function NativeList() {
     if (filter) {
       // history.replace(`${history.location.pathname}?search=${encodeURIComponent(filter)}`)
       setSearch({ search: filter })
-    }
-    else {
+    } else {
       setSearch()
     }
   }, [ setSearch, filter ])

@@ -1,4 +1,14 @@
-import { Box, Button, Divider, IconButton, Link, AppBar as MaterialAppBar, Toolbar, Tooltip, Typography } from '@mui/material'
+import {
+  AppBar as MaterialAppBar,
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Link,
+  Toolbar,
+  Tooltip,
+  Typography
+} from '@mui/material'
 import React, { useMemo } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { AppBarAction as AppBarActionProps } from '.'
@@ -8,7 +18,11 @@ import DesktopSearch from './DesktopSearch'
 import StatusButton from './StatusButton'
 import { AppBarProps } from './model'
 
-function AppBarAction({ text, desktopIcon, buttonProps }: AppBarActionProps) {
+function AppBarAction({
+  text,
+  desktopIcon,
+  buttonProps
+}: AppBarActionProps) {
   if (!desktopIcon) {
     return (
       <Button {...buttonProps} color="inherit">
@@ -58,7 +72,7 @@ function Desktop({ ...rest }: AppBarProps) {
           <Box
             sx={{
               display: 'flex',
-              flex:    1 
+              flex:    1
             }}
           >
             {settings.search && <DesktopSearch search={settings.search} />}
@@ -106,4 +120,5 @@ function Desktop({ ...rest }: AppBarProps) {
     </Box>
   )
 }
+
 export default Desktop

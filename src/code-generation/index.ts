@@ -1,5 +1,4 @@
-
-export { default as CPlusPlusCodeGenerator }  from './CPlusPlusCodeGenerator'
+export { default as CPlusPlusCodeGenerator } from './CPlusPlusCodeGenerator'
 export * from './CPlusPlusCodeGenerator'
 
 export { default as CSharpCodeGenerator } from './CSharpEnumCodeGenerator'

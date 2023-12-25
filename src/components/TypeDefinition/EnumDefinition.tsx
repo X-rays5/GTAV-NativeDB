@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from '@mui/material'
-import { useMemo, Fragment } from 'react'
+import { Fragment, useMemo } from 'react'
 import { TypeDefinitionEnum } from '../../context'
 import NativeType from '../NativeType'
 import NativeValue from '../NativeValue'
@@ -9,7 +9,10 @@ interface EnumDefinitionProps {
   highlightValue?: string
 }
 
-export default function EnumDefinition({ type, highlightValue }: EnumDefinitionProps) {
+export default function EnumDefinition({
+  type,
+  highlightValue
+}: EnumDefinitionProps) {
   const theme = useTheme()
   const values = useMemo(() => {
     return Object.values(type.values)
@@ -20,7 +23,7 @@ export default function EnumDefinition({ type, highlightValue }: EnumDefinitionP
       component="div"
       sx={{
         p:          1,
-        fontFamily: '"Roboto Mono", monospace' 
+        fontFamily: '"Roboto Mono", monospace'
       }}
       variant="body2"
     >
@@ -34,7 +37,7 @@ export default function EnumDefinition({ type, highlightValue }: EnumDefinitionP
 
       enum&nbsp;
       <NativeType type={type.name} />
-&nbsp;&#123;
+      &nbsp;&#123;
       <br />
 
       {values.map((value, i) => (
@@ -48,7 +51,10 @@ export default function EnumDefinition({ type, highlightValue }: EnumDefinitionP
             </Fragment>
           )}
 
-          <Box component="span" sx={{ color: highlightValue === value.name ? theme.extensions.constantIdentifierHighlight : 'unset' }}>
+          <Box
+            component="span"
+            sx={{ color: highlightValue === value.name ? theme.extensions.constantIdentifierHighlight : 'unset' }}
+          >
             {value.name}
           </Box>
 

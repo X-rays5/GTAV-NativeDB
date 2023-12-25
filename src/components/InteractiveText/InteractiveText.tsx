@@ -18,11 +18,14 @@ const StyledButtonBase = styled(ButtonBase)(({ theme }) => {
   }
 })
 
-export interface InteractiveTextProps extends ButtonBaseProps { 
+export interface InteractiveTextProps extends ButtonBaseProps {
   children?: string,
 }
 
-export default forwardRef(function InteractiveText({ children, ...rest }: InteractiveTextProps, ref) {
+export default forwardRef(function InteractiveText({
+  children,
+  ...rest
+}: InteractiveTextProps, ref) {
   if (!children) {
     return null
   }

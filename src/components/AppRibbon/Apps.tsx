@@ -1,4 +1,4 @@
-import { Divider, Typography, styled } from '@mui/material'
+import { Divider, styled, Typography } from '@mui/material'
 import { HomeRepairService as HomeRepairServiceIcon, Storage as Alloc8orNdbIcon } from '@mui/icons-material'
 import AppTile from './AppTile'
 

@@ -3,32 +3,26 @@ import { CodeGenNative, CodeGenType } from './ICodeGenerator'
 
 export interface CSharpCodeGeneratorSettings extends CodeGeneratorBaseSettings {
   generateComments: boolean
-  includeNdbLinks : boolean
-  includeParams   : boolean
-  enumName        : string
-  namespaceName   : string
+  includeNdbLinks: boolean
+  includeParams: boolean
+  enumName: string
+  namespaceName: string
 }
 
-export default
-class CSharpCodeGenerator extends CodeGeneratorBase<CSharpCodeGeneratorSettings> {
-  protected getOpeningBracket(): string | null {
-    return '{'
-  }
-
-  protected getClosingBracket(): string | null {
-    return '}'
-  }
-
-  protected formatComment(comment: string): string {
-    return `// ${comment}`
-  }
-
+export default class CSharpCodeGenerator extends CodeGeneratorBase<CSharpCodeGeneratorSettings> {
   addNative(native: CodeGenNative): this {
-    const { generateComments, includeNdbLinks, includeParams } = this.settings
+    const {
+      generateComments,
+      includeNdbLinks,
+      includeParams
+    } = this.settings
 
-    const params     = native.params.map(({ type, name }) => `${name}: ${this.formatType(type)}`).join(', ')
+    const params = native.params.map(({
+      type,
+      name
+    }) => `${name}: ${this.formatType(type)}`).join(', ')
     const returnType = this.formatType(native.returnType)
-    const link       =  `${window.location.origin}/natives/${native.hash}`
+    const link = `${window.location.origin}/natives/${native.hash}`
 
     return this
       .conditional(generateComments || includeNdbLinks || includeParams, gen => gen.writeBlankLine())
@@ -75,11 +69,22 @@ class CSharpCodeGenerator extends CodeGeneratorBase<CSharpCodeGeneratorSettings>
       .popBranch()
   }
 
+  protected getOpeningBracket(): string | null {
+    return '{'
+  }
+
+  protected getClosingBracket(): string | null {
+    return '}'
+  }
+
+  protected formatComment(comment: string): string {
+    return `// ${comment}`
+  }
+
   private transformNativeName(name: string): string {
     if (name.startsWith('_0x')) {
       return `N${name.slice(1)}`
-    }
-    else {
+    } else {
       return name
     }
   }

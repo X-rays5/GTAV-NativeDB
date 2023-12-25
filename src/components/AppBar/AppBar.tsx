@@ -7,6 +7,7 @@ import { AppBarProps } from './model'
 function AppBar(props: AppBarProps) {
   const mobile = useIsSmallDisplay()
 
-  return mobile ? <Mobile {...props} /> : <Desktop {...props} /> 
+  return mobile ? <Mobile {...props} /> : <Desktop {...props} />
 }
+
 export default memo(AppBar)

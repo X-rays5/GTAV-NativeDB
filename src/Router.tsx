@@ -1,26 +1,29 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { GenerateCodePage, Hashing, NativesPage } from './pages'
 import { AppBar } from './components'
 import { Game, SelectedGameProvider } from './context'
 
 
-function GameNdb({ base, game }: { base: string, game: Game }) {
+function GameNdb({
+  base,
+  game
+}: { base: string, game: Game }) {
   return (
     <SelectedGameProvider game={game}>
       <AppBar />
 
       <Routes>
-        <Route 
-          element={<NativesPage />} 
+        <Route
+          element={<NativesPage />}
           path="/natives/:native"
         />
 
-        <Route 
+        <Route
           element={<NativesPage />}
           path="/natives"
         />
 
-        <Route 
+        <Route
           element={<GenerateCodePage />}
           path="/generate-code/:language"
         />

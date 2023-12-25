@@ -1,4 +1,3 @@
-
 export interface FiveMNativeParam {
   type: string
   name: string
@@ -10,15 +9,15 @@ export interface FiveMCodeExample {
 }
 
 export interface FiveMNative {
-  name       : string
+  name: string
   description: string
-  ns         : string
-  game       : string
-  apiset     : string
-  params     : FiveMNativeParam[]
-  results    : string
-  hash       : string
-  examples   : FiveMCodeExample[]
+  ns: string
+  game: string
+  apiset: string
+  params: FiveMNativeParam[]
+  results: string
+  hash: string
+  examples: FiveMCodeExample[]
 }
 
 export type FiveMNamespace = { [hash: string]: FiveMNative }

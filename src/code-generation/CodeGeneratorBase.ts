@@ -1,14 +1,14 @@
 import _ from 'lodash'
 import { Native, NativeParam } from '../context'
-import ICodeGenerator, { CodeGenNative, CodeGenType } from './ICodeGenerator'
+import ICodeGenerator, { CodeGeneratorFile, CodeGenNative, CodeGenType } from './ICodeGenerator'
 
 interface BranchInfo {
   one_line: boolean
 }
 
 export interface CodeGeneratorBaseSettings {
-  indentation   : string
-  lineEnding    : 'crlf' | 'lf'
+  indentation: string
+  lineEnding: 'crlf' | 'lf'
   compactVectors: boolean
 }
 
@@ -16,14 +16,17 @@ export function splitCamelCaseString(str: string): string[] {
   return str.replace(/([A-Z0-9])/g, '_$1').toLowerCase().split('_')
 }
 
-function getParamGroup(params: NativeParam[]): [number, string] {
+function getParamGroup(params: NativeParam[]): [ number, string ] {
   const set = [ 'x', 'y', 'z', 'w' ]
 
   const group: string = splitCamelCaseString(params[0].name)
     .filter(g => g !== 'x')
     .join('')
 
-  const selected = _.takeWhile(params, ({ name, type }, index) => {
+  const selected = _.takeWhile(params, ({
+    name,
+    type
+  }, index) => {
     const split = splitCamelCaseString(name)
 
     return (
@@ -61,8 +64,7 @@ export function compactParams(params: NativeParam[], compact: boolean): NativePa
         name: getParamNameForParamGroup(groupName)
       })
       i += groupLength - 1
-    }
-    else {
+    } else {
       result.push(params[i])
     }
   }
@@ -71,54 +73,71 @@ export function compactParams(params: NativeParam[], compact: boolean): NativePa
 }
 
 
-export default
-abstract class CodeGeneratorBase<TSettings extends CodeGeneratorBaseSettings> implements ICodeGenerator {
-  private _result   : string = ''
-  private _extraFiles : CodeGeneratorFile[] = []
-  private _branches : BranchInfo[] = []
-  private _settings : TSettings
+export default abstract class CodeGeneratorBase<TSettings extends CodeGeneratorBaseSettings> implements ICodeGenerator {
+  private _result: string = ''
+  private _extraFiles: CodeGeneratorFile[] = []
+  private _branches: BranchInfo[] = []
   private _blankLine: boolean = false
-  private _newLine  : boolean = true
-
-  protected get settings() {
-    return this._settings
-  }
+  private _newLine: boolean = true
 
   constructor(settings: TSettings) {
     this._settings = settings
   }
 
-  private getLineEnding(): string {
-    switch (this.settings.lineEnding) {
-      case 'lf':
-        return '\n'
-      case 'crlf':
-        return '\r\n'
+  private _settings: TSettings
+
+  protected get settings() {
+    return this._settings
+  }
+
+  abstract addNative(native: CodeGenNative): this
+
+  abstract pushNamespace(name: string): this
+
+  abstract popNamespace(): this
+
+  abstract transformBaseType(type: string, isPointer: boolean): string
+
+  abstract end(): this
+
+  public nativeToCodeGenNative(native: Native): CodeGenNative {
+    return {
+      name:       native.name,
+      hash:       native.hash,
+      jhash:      native.jhash,
+      returnType: this.typeStringToCodeGenType(native.returnType),
+      oldNames:   native.oldNames,
+      params:     compactParams(native.params, this.settings.compactVectors).map(({
+        type,
+        name
+      }) => ({
+        type: this.typeStringToCodeGenType(type),
+        name: name
+      })),
+      build:   native.build,
+      comment: native.comment
     }
   }
 
-  private isNewLine(): boolean {
-    return this._newLine
-  }
-
-  private isOneLineBranch(): boolean {
-    return !!_.last(this._branches)?.one_line
-  }
-
-  private getIndentation(): string {
-    if (this.isOneLineBranch()) {
-      return ''
-    }
-    return this.settings.indentation.repeat(this._branches.length)
-  }
-
-  private writeLineEnding(blank: boolean = false): this {
-    if (!this.isOneLineBranch() && (!this.isNewLine() || this._blankLine)) {
-      this._result += this.getLineEnding()
-      this._newLine = true
-    }
-    this._blankLine = blank
+  start(): this {
+    this._result = ''
     return this
+  }
+
+  get(): string {
+    return this._result
+  }
+
+  submitExtraFile(file: CodeGeneratorFile) {
+    this._extraFiles.push(file)
+  }
+
+  getExtraFiles(): CodeGeneratorFile[] {
+    return this._extraFiles
+  }
+
+  clearExtraFiles() {
+    this._extraFiles = []
   }
 
   protected writeLine(line: string, comment?: string, documentation: boolean = false): this {
@@ -135,15 +154,10 @@ abstract class CodeGeneratorBase<TSettings extends CodeGeneratorBaseSettings> im
   }
 
   protected abstract getOpeningBracket(): string | null
+
   protected abstract getClosingBracket(): string | null
 
   protected abstract formatComment(comment: string, documentation: boolean): string
-  
-  abstract addNative(native: CodeGenNative): this
-  abstract pushNamespace(name: string): this
-  abstract popNamespace(): this
-  abstract transformBaseType(type: string, isPointer: boolean): string
-  abstract end(): this
 
   protected pushIndentation(): this {
     ++this._branches.length
@@ -224,6 +238,39 @@ abstract class CodeGeneratorBase<TSettings extends CodeGeneratorBaseSettings> im
     return this
   }
 
+  private getLineEnding(): string {
+    switch (this.settings.lineEnding) {
+      case 'lf':
+        return '\n'
+      case 'crlf':
+        return '\r\n'
+    }
+  }
+
+  private isNewLine(): boolean {
+    return this._newLine
+  }
+
+  private isOneLineBranch(): boolean {
+    return !!_.last(this._branches)?.one_line
+  }
+
+  private getIndentation(): string {
+    if (this.isOneLineBranch()) {
+      return ''
+    }
+    return this.settings.indentation.repeat(this._branches.length)
+  }
+
+  private writeLineEnding(blank: boolean = false): this {
+    if (!this.isOneLineBranch() && (!this.isNewLine() || this._blankLine)) {
+      this._result += this.getLineEnding()
+      this._newLine = true
+    }
+    this._blankLine = blank
+    return this
+  }
+
   private typeStringToCodeGenType(type: string): CodeGenType {
     const pointers = _.sumBy(type, c => +(c === '*'))
     return {
@@ -231,42 +278,5 @@ abstract class CodeGeneratorBase<TSettings extends CodeGeneratorBaseSettings> im
       isConst:  type.includes('const '),
       baseType: this.transformBaseType(type.replace(/^(const |)([A-Z0-9]+)\**$/i, '$2'), !!pointers)
     }
-  }
-
-  public nativeToCodeGenNative(native: Native): CodeGenNative {
-    return {
-      name:       native.name,
-      hash:       native.hash,
-      jhash:      native.jhash,
-      returnType: this.typeStringToCodeGenType(native.returnType),
-      oldNames:   native.oldNames,
-      params:     compactParams(native.params, this.settings.compactVectors).map(({ type, name }) => ({
-        type: this.typeStringToCodeGenType(type),
-        name: name
-      })),
-      build:   native.build,
-      comment: native.comment
-    }
-  }
-
-  start(): this {
-    this._result = ''
-    return this
-  }
-
-  get(): string {
-    return this._result
-  }
-
-  submitExtraFile(file: CodeGeneratorFile) {
-    this._extraFiles.push(file);
-  }
-
-  getExtraFiles(): CodeGeneratorFile[] {
-    return this._extraFiles;
-  }
-
-  clearExtraFiles() {
-    this._extraFiles = [];
   }
 }

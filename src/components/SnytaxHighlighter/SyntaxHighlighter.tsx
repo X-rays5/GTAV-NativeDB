@@ -9,7 +9,11 @@ export interface SyntaxHighlighterProps {
   customStyle?: object
 }
 
-function SyntaxHighlighter({ language, children, customStyle }: SyntaxHighlighterProps) {
+function SyntaxHighlighter({
+  language,
+  children,
+  customStyle
+}: SyntaxHighlighterProps) {
   const theme = useTheme()
 
   const highlighterStyle = theme.palette.mode === 'dark'
@@ -17,14 +21,14 @@ function SyntaxHighlighter({ language, children, customStyle }: SyntaxHighlighte
     : lightStyle
 
   return (
-    <Highlighter 
-      customStyle={{ 
-        background: 'none', 
-        padding:    theme.spacing(2), 
+    <Highlighter
+      customStyle={{
+        background: 'none',
+        padding:    theme.spacing(2),
         margin:     0,
         ...customStyle
-      }} 
-      language={language} 
+      }}
+      language={language}
       style={highlighterStyle}
     >
       {children}

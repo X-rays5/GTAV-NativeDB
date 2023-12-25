@@ -13,23 +13,23 @@ export default function CPlusPlus() {
           options: [
             {
               label: 'Tab',
-              value: '\t' 
+              value: '\t'
             },
             {
               label: '1 Space',
-              value: ' ' 
+              value: ' '
             },
             {
               label: '2 Spaces',
-              value: '  ' 
+              value: '  '
             },
             {
               label: '4 Spaces',
-              value: '    ' 
+              value: '    '
             },
             {
               label: '8 Spaces',
-              value: '        ' 
+              value: '        '
             }
           ]
         },
@@ -40,11 +40,11 @@ export default function CPlusPlus() {
           options: [
             {
               label: 'LF',
-              value: 'lf' 
+              value: 'lf'
             },
             {
               label: 'CR-LF',
-              value: 'crlf' 
+              value: 'crlf'
             }
           ]
         },
@@ -70,7 +70,8 @@ export default function CPlusPlus() {
         invokeFunction:     'invoke',
         invokeSupportsVoid: false,
         oneLineFunctions:   true,
-        includeNdbLinks:    false
+        includeNdbLinks:    false,
+        sol2Bindings:       false
       }}
       extension="hpp"
       generator={CPlusPlusCodeGenerator}
@@ -105,6 +106,11 @@ export default function CPlusPlus() {
           type:  'boolean',
           label: 'C++ Compliant',
           prop:  'cppCompliant'
+        },
+        {
+          type:  'boolean',
+          label: 'Sol 2 Bindings',
+          prop:  'sol2Bindings'
         }
       ]}
     />

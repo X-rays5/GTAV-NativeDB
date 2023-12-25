@@ -1,8 +1,5 @@
-import { darkScrollbar } from '@mui/material'
-import { createTheme, ThemeOptions, ThemeProvider, useMediaQuery } from '@mui/material'
-import { useEffect } from 'react'
-import { useMemo } from 'react'
-import { ReactNode } from 'react'
+import { createTheme, darkScrollbar, ThemeOptions, ThemeProvider, useMediaQuery } from '@mui/material'
+import { ReactNode, useEffect, useMemo } from 'react'
 import { useSettings, useThemes } from './hooks'
 
 declare module '@mui/material/styles' {
@@ -15,6 +12,7 @@ declare module '@mui/material/styles' {
       symbolColor: string
     }
   }
+
   // allow configuration using `createTheme`
   interface ThemeOptions {
     extensions: {

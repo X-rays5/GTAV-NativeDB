@@ -9,8 +9,7 @@ export default async function LoadSpecialData(dataString: string): Promise<Docum
     }
 
     return data as DocumentRoot
-  }
-  catch (e) {
+  } catch (e) {
     return null
   }
 }

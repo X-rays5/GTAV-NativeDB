@@ -1,4 +1,14 @@
-import { Card, CardActionArea, CardContent, CardMedia, Popover, styled, TextField, Typography, useTheme } from '@mui/material'
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Popover,
+  styled,
+  TextField,
+  Typography,
+  useTheme
+} from '@mui/material'
 import PopupState from 'material-ui-popup-state'
 import { bindPopover, bindTrigger } from 'material-ui-popup-state/hooks'
 import { ChangeEvent, Fragment, memo, useCallback, useEffect, useState } from 'react'
@@ -23,7 +33,12 @@ interface ThemeColorProps {
   onChange: (prop: keyof ThemeColors, value: string) => void
 }
 
-function ThemeColor({ label, themeColor, prop, onChange }: ThemeColorProps) { 
+function ThemeColor({
+  label,
+  themeColor,
+  prop,
+  onChange
+}: ThemeColorProps) {
   const { extensions } = useTheme()
   const [ color, setColor ] = useState(themeColor)
   const [ input, setInput ] = useState(color)
@@ -37,7 +52,7 @@ function ThemeColor({ label, themeColor, prop, onChange }: ThemeColorProps) {
   }, [ color ])
 
   useEffect(() => setColor(themeColor), [ themeColor ])
-  
+
   const handleInputChanged = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)
 
@@ -55,7 +70,7 @@ function ThemeColor({ label, themeColor, prop, onChange }: ThemeColorProps) {
               <CardMedia
                 sx={{
                   height:          100,
-                  backgroundColor: color 
+                  backgroundColor: color
                 }}
               />
             </CardActionArea>
@@ -100,4 +115,5 @@ function ThemeColor({ label, themeColor, prop, onChange }: ThemeColorProps) {
     </PopupState>
   )
 }
+
 export default memo(ThemeColor)

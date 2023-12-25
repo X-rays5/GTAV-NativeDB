@@ -1,11 +1,11 @@
-import { LinearProgress, Typography, Box, Stack } from '@mui/material'
+import { Box, LinearProgress, Stack, Typography } from '@mui/material'
 import { memo } from 'react'
 
 const image = '/GTA5/splash.png'
 
 function LoadingPage() {
   return (
-    <Box 
+    <Box
       sx={{
         p:              2,
         display:        'flex',
@@ -16,15 +16,15 @@ function LoadingPage() {
       }}
     >
       <Stack spacing={2}>
-        <img 
+        <img
           alt="splash screen logo"
-          height="225" 
+          height="225"
           src={image}
           style={{ objectFit: 'contain' }}
         />
 
-        <Typography 
-          align="center" 
+        <Typography
+          align="center"
           component="h1"
           variant="h2"
           gutterBottom
@@ -37,4 +37,5 @@ function LoadingPage() {
     </Box>
   )
 }
+
 export default memo(LoadingPage)

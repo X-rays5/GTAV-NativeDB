@@ -1,6 +1,6 @@
-import { Grid, SwipeableDrawer, useTheme, IconButton, Box, Typography, Paper, alpha } from '@mui/material'
+import { alpha, Box, Grid, IconButton, Paper, SwipeableDrawer, Typography, useTheme } from '@mui/material'
 import { Close as CloseIcon } from '@mui/icons-material'
-import React, { memo,useCallback } from 'react'
+import React, { memo, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useGameUrl, useIsSmallDisplay } from '../../hooks'
 import { getOverlayAlpha } from '../../common'
@@ -10,12 +10,12 @@ import { useSearchParams } from 'react-router-dom'
 
 function Desktop() {
   const { native } = useParams<{ native?: string }>()
-  
+
   return (
     <Grid
       sx={{
         flex:     1,
-        overflow: 'hidden' 
+        overflow: 'hidden'
       }}
       container
     >
@@ -24,7 +24,7 @@ function Desktop() {
         sm={6}
         sx={{
           overflow: 'hidden scroll',
-          height:   '100%' 
+          height:   '100%'
         }}
         xl={4}
         xs={12}
@@ -53,7 +53,7 @@ function NativeInfoDrawer() {
   const theme = useTheme()
 
   const nativesUrl = useGameUrl('/natives')
-  
+
   const handleClose = useCallback(() => {
     navigate({
       pathname: nativesUrl,
@@ -72,13 +72,14 @@ function NativeInfoDrawer() {
       anchor="bottom"
       components={{ Root: 'section' }}
       onClose={handleClose}
-      onOpen={() => { }}
+      onOpen={() => {
+      }}
       open={!!nativeHash}
     >
-      <Paper 
-        sx={{ 
-          display:         'flex', 
-          alignItems:      'center', 
+      <Paper
+        sx={{
+          display:         'flex',
+          alignItems:      'center',
           justifyContent:  'center',
           borderRadius:    '0px',
           position:        'sticky',
@@ -89,7 +90,7 @@ function NativeInfoDrawer() {
           ...(theme.palette.mode === 'dark' && {
             backgroundImage: `linear-gradient(${alpha(
               '#fff',
-              getOverlayAlpha(4),
+              getOverlayAlpha(4)
             )}, ${alpha('#fff', getOverlayAlpha(4))})`
           }),
           zIndex: 1
@@ -119,7 +120,7 @@ function Mobile() {
       <Grid
         sx={{
           flex:     1,
-          overflow: 'hidden' 
+          overflow: 'hidden'
         }}
         container
       >
@@ -139,4 +140,5 @@ function NativesPage() {
 
   return mobile ? <Mobile /> : <Desktop />
 }
+
 export default memo(NativesPage)

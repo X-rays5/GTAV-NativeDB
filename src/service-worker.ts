@@ -10,7 +10,7 @@
 
 import { clientsClaim } from 'workbox-core'
 import { ExpirationPlugin } from 'workbox-expiration'
-import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching'
+import { createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
 import { StaleWhileRevalidate } from 'workbox-strategies'
 
@@ -30,7 +30,10 @@ precacheAndRoute(self.__WB_MANIFEST)
 const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$')
 registerRoute(
   // Return false to exempt requests from being fulfilled by index.html.
-  ({ request, url }: { request: Request; url: URL }) => {
+  ({
+    request,
+    url
+  }: { request: Request; url: URL }) => {
     // If this isn't a navigation, skip.
     if (request.mode !== 'navigate') {
       return false

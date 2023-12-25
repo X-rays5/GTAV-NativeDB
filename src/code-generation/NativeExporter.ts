@@ -1,14 +1,13 @@
 import _ from 'lodash'
 import { GameNativeData } from '../context'
-import ICodeGenerator from './ICodeGenerator'
+import ICodeGenerator, { CodeGeneratorFile } from './ICodeGenerator'
 
 export interface NativeData {
-  natives   : GameNativeData['natives'],
+  natives: GameNativeData['natives'],
   namespaces: GameNativeData['namespaces']
 }
 
-export default
-class NativeExporter {
+export default class NativeExporter {
   codeGenerator: ICodeGenerator
 
   constructor(codeGenerator: ICodeGenerator) {
@@ -30,6 +29,6 @@ class NativeExporter {
   }
 
   getExtraFiles(): CodeGeneratorFile[] {
-    return this.codeGenerator.getExtraFiles();
+    return this.codeGenerator.getExtraFiles()
   }
 }

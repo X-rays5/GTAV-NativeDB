@@ -10,7 +10,8 @@
   ],
   "plugins": [
     "react",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "only-warn"
   ],
   "settings": {
     "react": {
@@ -100,7 +101,7 @@
     ],
     "no-console": [
       "warn",
-      { 
+      {
         "allow": [
           "warn",
           "error"

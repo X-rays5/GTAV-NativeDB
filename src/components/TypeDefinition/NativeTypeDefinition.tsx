@@ -13,7 +13,7 @@ export default function NativeTypeDefinition({ type }: NativeTypeDefinitionProps
       component="div"
       sx={{
         p:          1,
-        fontFamily: '"Roboto Mono", monospace' 
+        fontFamily: '"Roboto Mono", monospace'
       }}
       variant="body2"
     >

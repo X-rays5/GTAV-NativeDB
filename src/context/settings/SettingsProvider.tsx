@@ -1,4 +1,4 @@
-import { ReactNode, createContext, memo, useCallback } from 'react'
+import { createContext, memo, ReactNode, useCallback } from 'react'
 import { NativeSources, Settings } from './model'
 import useLocalStorageState from 'use-local-storage-state'
 import { useGuardedContext } from '../../hooks'
@@ -42,8 +42,8 @@ export const SettingsProvider = memo(function SettingsProvider({ children }: Set
   return (
     <settingsContext.Provider
       value={{
-        settings, 
-        patchSettings 
+        settings,
+        patchSettings
       }}
     >
       {children}

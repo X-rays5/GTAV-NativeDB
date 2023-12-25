@@ -7,10 +7,9 @@ export default async function LoadFivemNatives(): Promise<FiveMNativeJson | null
     if (!response.ok) {
       return null
     }
-    
+
     return await response.json()
-  }
-  catch (e) {
+  } catch (e) {
     return null
   }
 }

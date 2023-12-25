@@ -24,7 +24,7 @@ const humanLangMap: { [name: string]: string } = {
 
 function CodeExamples({ examples }: CodeExamplesProps) {
   const [ language, setLanguage ] = useState(examples[0].lang)
-  
+
   const onTabChange = useCallback((e: SyntheticEvent<Element, Event>, language: string) => {
     setLanguage(language)
   }, [ setLanguage ])
@@ -43,10 +43,13 @@ function CodeExamples({ examples }: CodeExamplesProps) {
 
       <Divider />
 
-      {examples.map(({ lang, code }) => (
+      {examples.map(({
+        lang,
+        code
+      }) => (
         <TabPanel key={lang} sx={{ p: 0 }} value={lang}>
-          <SyntaxHighlighter 
-            language={langMap[lang] ?? lang} 
+          <SyntaxHighlighter
+            language={langMap[lang] ?? lang}
           >
             {code}
           </SyntaxHighlighter>

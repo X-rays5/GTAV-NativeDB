@@ -1,6 +1,4 @@
-import { useState, useEffect, ReactNode } from 'react'
-import { useCallback } from 'react'
-import { createContext } from 'react'
+import { createContext, ReactNode, useCallback, useEffect, useState } from 'react'
 
 export const onlineStatusContext = createContext(true)
 
