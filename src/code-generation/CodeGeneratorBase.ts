@@ -1,6 +1,6 @@
 import _ from 'lodash'
-import { Native, NativeParam } from '../store'
-import ICodeGenerator, {CodeGeneratorFile, CodeGenNative, CodeGenType} from './ICodeGenerator'
+import { Native, NativeParam } from '../context'
+import ICodeGenerator, { CodeGenNative, CodeGenType } from './ICodeGenerator'
 
 interface BranchInfo {
   one_line: boolean
@@ -15,6 +15,61 @@ export interface CodeGeneratorBaseSettings {
 export function splitCamelCaseString(str: string): string[] {
   return str.replace(/([A-Z0-9])/g, '_$1').toLowerCase().split('_')
 }
+
+function getParamGroup(params: NativeParam[]): [number, string] {
+  const set = [ 'x', 'y', 'z', 'w' ]
+
+  const group: string = splitCamelCaseString(params[0].name)
+    .filter(g => g !== 'x')
+    .join('')
+
+  const selected = _.takeWhile(params, ({ name, type }, index) => {
+    const split = splitCamelCaseString(name)
+
+    return (
+      split.includes(set[index]) &&
+      split.filter(g => g !== set[index]).join('') === group &&
+      type === 'float'
+    )
+  })
+
+  return [ selected.length, group ]
+}
+
+function getParamNameForParamGroup(groupName: string) {
+  const defaultName = 'vec'
+
+  return groupName
+    ? `${groupName.replace(/^(\d)$/, `${defaultName}$1`)}_`
+    : defaultName
+}
+
+
+export function compactParams(params: NativeParam[], compact: boolean): NativeParam[] {
+  if (!compact) {
+    return params
+  }
+
+  const result: NativeParam[] = []
+
+  for (let i = 0; i < params.length; ++i) {
+    const [ groupLength, groupName ] = getParamGroup(params.slice(i))
+
+    if (groupLength >= 2) {
+      result.push({
+        type: `Vector${groupLength}`,
+        name: getParamNameForParamGroup(groupName)
+      })
+      i += groupLength - 1
+    }
+    else {
+      result.push(params[i])
+    }
+  }
+
+  return result
+}
+
 
 export default
 abstract class CodeGeneratorBase<TSettings extends CodeGeneratorBaseSettings> implements ICodeGenerator {
@@ -110,9 +165,7 @@ abstract class CodeGeneratorBase<TSettings extends CodeGeneratorBaseSettings> im
       this._newLine = false
     }
 
-    this._branches.push({
-      one_line: oneLine
-    })
+    this._branches.push({ one_line: oneLine })
 
     return this
   }
@@ -171,80 +224,27 @@ abstract class CodeGeneratorBase<TSettings extends CodeGeneratorBaseSettings> im
     return this
   }
 
-  private getParamGroup(params: NativeParam[]): [number, string] {
-    const set = ['x', 'y', 'z', 'w']
-
-    let group: string = splitCamelCaseString(params[0].name)
-      .filter(g => g !== 'x')
-      .join('')
-
-    const selected = _.takeWhile(params, ({ name, type }, index) => {
-      const split = splitCamelCaseString(name)
-
-      return (
-        split.includes(set[index]) &&
-        split.filter(g => g !== set[index]).join('') === group &&
-        type === 'float'
-      )
-    })
-
-    return [selected.length, group]
-  }
-
-  private getParamNameForParamGroup(_: string, groupName: string) {
-    let defaultName = 'vec'
-
-    return groupName
-      ? `${groupName.replace(/^(\d)$/, `${defaultName}$1`)}_`
-      : defaultName
-  }
-
-  private compactParams(nativeName: string, params: NativeParam[]): NativeParam[] {
-    if (!this.settings.compactVectors) {
-      return params
-    }
-
-    let result: NativeParam[] = []
-
-    for (let i = 0; i < params.length; ++i) {
-      const [groupLength, groupName] = this.getParamGroup(params.slice(i))
-
-      if (groupLength >= 2) {
-        result.push({
-          type: `Vector${groupLength}`,
-          name: this.getParamNameForParamGroup(nativeName, groupName)
-        })
-        i += groupLength - 1
-      }
-      else {
-        result.push(params[i])
-      }
-    }
-
-    return result
-  }
-
   private typeStringToCodeGenType(type: string): CodeGenType {
     const pointers = _.sumBy(type, c => +(c === '*'))
     return {
       pointers: pointers,
-      isConst : type.includes('const '),
+      isConst:  type.includes('const '),
       baseType: this.transformBaseType(type.replace(/^(const |)([A-Z0-9]+)\**$/i, '$2'), !!pointers)
     }
   }
 
   public nativeToCodeGenNative(native: Native): CodeGenNative {
     return {
-      name: native.name,
-      hash: native.hash,
-      jhash: native.jhash,
+      name:       native.name,
+      hash:       native.hash,
+      jhash:      native.jhash,
       returnType: this.typeStringToCodeGenType(native.returnType),
-      oldNames: native.oldNames,
-      params: this.compactParams(native.name, native.params).map(({ type, name }) => ({
+      oldNames:   native.oldNames,
+      params:     compactParams(native.params, this.settings.compactVectors).map(({ type, name }) => ({
         type: this.typeStringToCodeGenType(type),
         name: name
       })),
-      build: native.build,
+      build:   native.build,
       comment: native.comment
     }
   }

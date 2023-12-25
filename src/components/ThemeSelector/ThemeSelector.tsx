@@ -1,58 +1,47 @@
 import { Brightness4 as DarkIcon, Brightness6 as SystemIcon, BrightnessHigh as LightIcon } from '@mui/icons-material'
 import { Autocomplete, TextField, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { Fragment, useCallback, useEffect, useMemo } from 'react'
-import { useDispatch } from 'react-redux'
 import { useSettings, useThemes } from '../../hooks'
-import { setSettings } from '../../store'
 import SettingsControl from '../SettingsControl'
+import { useSettingsContext } from '../../context'
 
 
 export default function ThemeSelector() {
   const settings = useSettings()
-  const dispatch = useDispatch()
+  const { patchSettings } = useSettingsContext()
   const themes = useThemes()
 
-  const themeIds = useMemo(() => ['Default', ...Object.keys(themes)], [themes])
+  const themeIds = useMemo(() => [ 'Default', ...Object.keys(themes) ], [ themes ])
 
-  const handleThemeChanged = useCallback((_: unknown, value: any) => {
-    if (value !== null) {
-      dispatch(setSettings({
-        theme: value
-      }))
+  const handleThemeChanged = useCallback((_: unknown, value: unknown) => {
+    if (value !== null && value === 'light' || value === 'dark' || value === 'system') {
+      patchSettings({ theme: value })
     }
-  }, [dispatch])
+  }, [ patchSettings ])
 
   const handleLightThemeChanged = useCallback((_: unknown, value: string) => {
-    dispatch(setSettings({
-      lightTheme: value
-    }))
-  }, [dispatch])
+    patchSettings({ lightTheme: value })
+  }, [ patchSettings ])
 
   const handleDarkThemeChanged = useCallback((_: unknown, value: string) => {
-    dispatch(setSettings({
-      darkTheme: value
-    }))
-  }, [dispatch])
+    patchSettings({ darkTheme: value })
+  }, [ patchSettings ])
 
   useEffect(() => {
     if (!themes[settings.lightTheme] && settings.lightTheme !== 'Default') {
-      dispatch(setSettings({
-        lightTheme: 'Default'
-      }))
+      patchSettings({ lightTheme: 'Default' })
     }
     if (!themes[settings.darkTheme] && settings.darkTheme !== 'Default') {
-      dispatch(setSettings({
-        darkTheme: 'Default'
-      }))
+      patchSettings({ darkTheme: 'Default' })
     }
-  }, [settings, themes, dispatch])
+  }, [ settings, themes, patchSettings ])
 
   return (
     <Fragment>
       <ToggleButtonGroup
         color="primary"
-        value={settings.theme}
         onChange={handleThemeChanged}
+        value={settings.theme}
         exclusive
         fullWidth
       >
@@ -60,10 +49,12 @@ export default function ThemeSelector() {
           <LightIcon sx={{ mr: 1 }} />
           Light
         </ToggleButton>
+
         <ToggleButton value="system">
           <SystemIcon sx={{ mr: 1 }} />
           System
         </ToggleButton>
+
         <ToggleButton value="dark">
           <DarkIcon sx={{ mr: 1 }} />
           Dark
@@ -71,33 +62,34 @@ export default function ThemeSelector() {
       </ToggleButtonGroup>
 
       <SettingsControl
-        label="Light Theme"
         icon={LightIcon}
+        label="Light Theme"
       >
         <Autocomplete 
-          options={themeIds}
-          value={settings.lightTheme}
-          onChange={handleLightThemeChanged}
-          renderInput={(params) => <TextField {...params} />}
           getOptionLabel={(id) => themes[id]?.name ?? id}
+          onChange={handleLightThemeChanged}
+          options={themeIds}
+          renderInput={(params) => <TextField {...params} />}
           size="small"
           sx={{ width: 200 }}
+          value={settings.lightTheme}
           disableClearable
           disablePortal
         />
       </SettingsControl>
+
       <SettingsControl 
-        label="Dark Theme"
         icon={DarkIcon}
+        label="Dark Theme"
       >
         <Autocomplete
-          options={themeIds}
-          value={settings.darkTheme}
-          onChange={handleDarkThemeChanged}
-          renderInput={(params) => <TextField {...params} />}
           getOptionLabel={(id) => themes[id]?.name ?? id}
+          onChange={handleDarkThemeChanged}
+          options={themeIds}
+          renderInput={(params) => <TextField {...params} />}
           size="small"
           sx={{ width: 200 }}
+          value={settings.darkTheme}
           disableClearable
           disablePortal
         />

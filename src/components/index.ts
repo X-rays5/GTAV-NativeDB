@@ -2,9 +2,6 @@
 export { default as AppBar } from './AppBar'
 export * from './AppBar'
 
-export { default as BetaRibbon } from './BetaRibbon'
-export * from './BetaRibbon'
-
 export { default as CodeComment } from './CodeComment'
 export * from './CodeComment'
 
@@ -85,3 +82,6 @@ export * from './ThemeJsonEditor'
 
 export { default as SettingsControl } from './SettingsControl'
 export * from './SettingsControl'
+
+export { default as AppRibbon } from './AppRibbon'
+export * from './AppRibbon'

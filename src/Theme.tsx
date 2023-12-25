@@ -3,7 +3,6 @@ import { createTheme, ThemeOptions, ThemeProvider, useMediaQuery } from '@mui/ma
 import { useEffect } from 'react'
 import { useMemo } from 'react'
 import { ReactNode } from 'react'
-import { getGame } from './constants'
 import { useSettings, useThemes } from './hooks'
 
 declare module '@mui/material/styles' {
@@ -29,110 +28,40 @@ declare module '@mui/material/styles' {
 }
 
 function getLightTheme(): ThemeOptions {
-  switch (getGame()) {
-    case "GTA5":
-      return {
-        palette: {
-          mode: 'light',
-          background: {
-            default: '#eee'
-          },
-          primary: {
-            main: '#0e752e'
-          },
-          secondary: {
-            main: '#ff3d00'
-          }
-        },
-        extensions: {
-          nativeValueHighlight: '#bf360c',
-          constantIdentifierHighlight: '#870000',
-          typeInfoBorderColor: '#565656',
-          symbolColor: '#bf360c',
-          parameterColor: '#870000'
-        }
-      }
-    case "RDR3":
-      return {
-        palette: {
-          mode: 'light',
-          background: {
-            default: '#eee'
-          },
-          primary: {
-            main: '#ee0000'
-          },
-          secondary: {
-            main: '#ff3d00'
-          }
-        },
-        extensions: {
-          nativeValueHighlight: '#bf360c',
-          constantIdentifierHighlight: '#870000',
-          typeInfoBorderColor: '#565656',
-          symbolColor: '#bf360c',
-          parameterColor: '#870000'
-        }
-      }
+  return {
+    palette: {
+      mode:       'light',
+      background: { default: '#eee' },
+      primary:    { main: '#0e752e' },
+      secondary:  { main: '#ff3d00' }
+    },
+    extensions: {
+      nativeValueHighlight:        '#bf360c',
+      constantIdentifierHighlight: '#870000',
+      typeInfoBorderColor:         '#565656',
+      symbolColor:                 '#bf360c',
+      parameterColor:              '#870000'
+    }
   }
 }
 
 const lightTheme = getLightTheme()
 
 function getDarkTheme(): ThemeOptions {
-  switch (getGame()) {
-    case "GTA5":
-      return {
-        palette: {
-          mode: 'dark',
-          primary: {
-            main: '#20ba4e'
-          },
-          secondary: {
-            main: '#ff8c00'
-          }
-        },
-        components: {
-          MuiCssBaseline: {
-            styleOverrides: {
-              body: darkScrollbar()
-            }
-          }
-        },
-        extensions: {
-          nativeValueHighlight: '#ffccbc',
-          constantIdentifierHighlight: '#ff9e80',
-          typeInfoBorderColor: '#565656',
-          symbolColor: '#ffab91',
-          parameterColor: '#ffcc80'
-        }
-      }
-    case "RDR3":
-      return {
-        palette: {
-          mode: 'dark',
-          primary: {
-            main: '#ee0000'
-          },
-          secondary: {
-            main: '#ff8c00'
-          }
-        },
-        components: {
-          MuiCssBaseline: {
-            styleOverrides: {
-              body: darkScrollbar()
-            }
-          }
-        },
-        extensions: {
-          nativeValueHighlight: '#ffccbc',
-          constantIdentifierHighlight: '#ff9e80',
-          typeInfoBorderColor: '#565656',
-          symbolColor: '#ffab91',
-          parameterColor: '#ffcc80'
-        }
-      }
+  return {
+    palette: {
+      mode:      'dark',
+      primary:   { main: '#20ba4e' },
+      secondary: { main: '#ff8c00' }
+    },
+    components: { MuiCssBaseline: { styleOverrides: { body: darkScrollbar() }}},
+    extensions: {
+      nativeValueHighlight:        '#ffccbc',
+      constantIdentifierHighlight: '#ff9e80',
+      typeInfoBorderColor:         '#565656',
+      symbolColor:                 '#ffab91',
+      parameterColor:              '#ffcc80'
+    }
   }
 }
 
@@ -151,35 +80,23 @@ function useSelectedColorScheme(dark: boolean): ThemeOptions {
   const colors = theme.colors
   return {
     palette: {
-      mode: theme.mode,
-      primary: {
-        main: colors.primary
-      },
-      secondary: {
-        main: colors.secondary
-      },
+      mode:       theme.mode,
+      primary:    { main: colors.primary },
+      secondary:  { main: colors.secondary },
       background: {
         default: colors.background,
-        paper: colors.paper
+        paper:   colors.paper
       },
-      text: {
-        primary: colors.text
-      }
+      text: { primary: colors.text }
     },
     extensions: {
-      nativeValueHighlight: colors.nativeValueHighlight,
+      nativeValueHighlight:        colors.nativeValueHighlight,
       constantIdentifierHighlight: colors.constantIdentifierHighlight,
-      typeInfoBorderColor: colors.typeInfoBorderColor,
-      symbolColor: colors.symbolColor,
-      parameterColor: colors.parameterColor
+      typeInfoBorderColor:         colors.typeInfoBorderColor,
+      symbolColor:                 colors.symbolColor,
+      parameterColor:              colors.parameterColor
     },
-    components: {
-      MuiCssBaseline: {
-        styleOverrides: {
-          body: theme.mode === 'dark' ? darkScrollbar() : undefined
-        }
-      }
-    }
+    components: { MuiCssBaseline: { styleOverrides: { body: theme.mode === 'dark' ? darkScrollbar() : undefined }}}
   }
 }
 
@@ -191,13 +108,13 @@ function Theme({ children }: { children: ReactNode }) {
 
   const theme = useMemo(
     () => createTheme(scheme),
-    [scheme]
+    [ scheme ]
   )
 
   useEffect(() => {
     document.querySelector('meta[name="theme-color"]')
       ?.setAttribute('content', dark ? theme.palette.background.paper : theme.palette.primary.main)
-  }, [dark, theme])
+  }, [ dark, theme ])
 
   return (
     <ThemeProvider theme={theme}>

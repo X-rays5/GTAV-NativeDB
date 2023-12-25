@@ -12,8 +12,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/X-rays5/GTAV-NativeDB">
-    <img src="public/GTA5/logo192.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/DottieDot/GTAV-NativeDB">
+    <img src="public/GTA5/android-chrome-192x192.png" alt="Logo" width="80" height="80">
   </a>
 
   <h1 align="center">Grand Theft Auto V Native Database</h3>
@@ -71,7 +71,7 @@ A native reference for Grand Theft Auto V built with React. Inspired by FiveM's 
 - Quickly jump to a namespace.
 - Uses [Alloc8or's native data](https://github.com/alloc8or/gta5-nativedb-data) which is more up-to-date and has the correct naming for all of the namespaces.
 - Ability to generate a native header file.
-- The namespace name is sticky so you always now what namespace you're viewing.
+- The namespace name is sticky so you always know what namespace you're viewing.
 - Works offline and is installable as a PWA.
 - Mobile UI.
 - FiveM natives (disabled by default).
@@ -103,32 +103,36 @@ A native reference for Grand Theft Auto V built with React. Inspired by FiveM's 
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 * [React.js](https://reactjs.org/)
-* [Redux](https://redux.js.org)
-* [Typescript](https://vuejs.org/)
+* [Typescript](https://www.typescriptlang.org/)
 * [MUI](https://mui.com/)
+* [Rust](https://www.rust-lang.org/)
+* [WASM](https://webassembly.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
+This project has been built with some of the following technologies:
+* [nodejs](https://nodejs.org/en)
+* [npm](https://nodejs.org/en)
+* [rust](https://www.rust-lang.org/tools/install)
+* [wasm-pack](https://www.rust-lang.org/tools/install)
 
-* nodejs
-* npm
-
-### Installation
+### Setup
 
 1. Clone the repo
    ```sh
    git clone https://github.com/X-rays5/GTAV-NativeDB.git
    ```
+2. Build wasm-lib 
+   ```sh
+   npm run build:wasm
+   ```
+
 2. Install NPM packages
    ```sh
    npm install
